@@ -1,0 +1,27 @@
+# secrets
+.env
+cookies.txt
+*.cookies
+
+# environments
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# generated data (never commit)
+raw/
+tmp/
+cache/
+logs/
+
+# Windows download markers
+*:Zone.Identifier
+*Zone.Identifier
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
