@@ -4,6 +4,12 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com), ver
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-28 (P6 news radar)
+
+### Added
+- `news-radar`: RSS/Atom feeds (`config/feeds.toml`), lookback window, dedupe, `news_judge.v1`, daily cap, News Candidates with Approval Pending; Approved candidates become ideas (Origin News) with a Raw Content provenance row; Rejected never do.
+- `services/news.py`; `/news` slash command.
+
 ## [0.7.0] - 2026-10-28 (P5 content cards)
 
 ### Added

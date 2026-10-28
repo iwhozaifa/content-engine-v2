@@ -1,0 +1,34 @@
+# News radar sources (RSS or Atom). Add or remove freely; `enabled = false` pauses one.
+# Checked working 2026-10-28.
+
+[[feed]]
+name = "OpenAI"
+url = "https://openai.com/news/rss.xml"
+
+[[feed]]
+name = "Google AI"
+url = "https://blog.google/technology/ai/rss/"
+
+[[feed]]
+name = "Google DeepMind"
+url = "https://deepmind.google/blog/rss.xml"
+
+[[feed]]
+name = "Hugging Face"
+url = "https://huggingface.co/blog/feed.xml"
+
+[[feed]]
+name = "The Verge AI"
+url = "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
+
+[[feed]]
+name = "TechCrunch AI"
+url = "https://techcrunch.com/category/artificial-intelligence/feed/"
+
+[[feed]]
+name = "Hacker News (200+ points)"
+url = "https://hnrss.org/frontpage?points=200"
+
+[[feed]]
+name = "Simon Willison"
+url = "https://simonwillison.net/atom/everything/"

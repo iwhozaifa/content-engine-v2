@@ -21,7 +21,7 @@ Rules:
 7. Scripts are spoken lines only unless Engine Settings "Production extras" is On (switched On 2026-10-28 for engine content cards: B-roll, on-screen text, captions, titles, thumbnails). If it is Off, cards are spoken lines only.
 8. If a step fails, record it on the row (Fetch status / Fetch error, or a note), finish the rest, and report what failed at the end.
 
-Slash commands: /migrate (phase 0, once) · /add-url · /score · /plan-week · /cards · /research · /write · /revise · /options · /carousel (/write and /revise remain for Approved ideas outside the weekly plan; /cards is the v3 flow)
+Slash commands: /migrate (phase 0, once) · /add-url · /score · /plan-week · /cards · /news · /research · /write · /revise · /options · /carousel (/write and /revise remain for Approved ideas outside the weekly plan; /cards is the v3 flow)
 
 ## Engine CLI (v3)
 
@@ -39,6 +39,7 @@ Slash commands: /migrate (phase 0, once) · /add-url · /score · /plan-week · 
 | `weekly-plan [--week YYYY-MM-DD]` | P4 | Content Plan slots (Topic Locked, Approval Pending, Suggested post date), Idea Status, Weekly Plans page |
 | `generate-cards --locked` / `generate-card <title>` | P5 | Scripts (cards A/B + captions), slot/idea status; also revisions and A/B choices |
 | `settings-set <row> <value>` | P5 | one Engine Settings cell |
+| `news-radar [--no-fetch]` | P6 | News Candidates (Pending); Approved → Raw Content + Idea (Origin News) |
 
 Layout: `commands/` (one module per CLI command), `services/` (notion, claude, settings, plan, runlog, retry), `prompts/` (`<name>.v<N>.md` + `.schema.json`, never inline prompt strings), `config/` (`settings.toml` defaults, `notion_ids.toml`), `schema/` (Notion schema snapshots), `tests/`.
 

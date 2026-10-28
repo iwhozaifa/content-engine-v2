@@ -11,7 +11,7 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 | P3 Creator scan | feature/p3-creator-scan | Merged | v0.5.0 |
 | P4 Weekly plan + topic locking | feature/p4-weekly-plan | Merged | v0.6.0 |
 | P5 Content cards | feature/p5-content-cards | Merged | v0.7.0 |
-| P6 News radar | feature/p6-news-radar | Not started | |
+| P6 News radar | feature/p6-news-radar | Merged | v0.8.0 |
 | P7 Approval + reschedule | feature/p7-reschedule | Not started | |
 | P8 Scheduling, notifications, hardening | feature/p8-scheduling-hardening | Not started | |
 
@@ -22,6 +22,7 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 | Rename `Hook Library.csv` → `Hook Library`, `CTA Bank.csv` → `CTA Bank` (Notion renames need your OK; the engine uses IDs so nothing depends on it) | Tidiness | open |
 | Set State = Active on the creators to scan (only Jack Roberts exists, State = Suggested), ideally 1 YouTube + 1 Instagram + 1 TikTok | P3 done test with real creators | open |
 | `YOUTUBE_API_KEY` in `.env` (free, Google Cloud console → YouTube Data API v3) | Faster, more reliable YouTube scans (yt-dlp fallback works without it) | open |
+| Review the 5 real News Candidates found 2026-10-28 (Approval = Pending) | Daily news flow | open |
 | Add the views listed by `cli.py migrate-schema --views` (API can't create views) | Notion UI | open |
 | Fill the 3 new Brand Profile sections on the DNA page (Topics to avoid, Example good/bad ideas) | Better brand-fit scoring | open |
 
@@ -75,3 +76,9 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 - `settings-set` edits one Engine Settings cell. Production extras switched **On** 2026-10-28 (`cli.py settings-set "Production extras" Off --apply` reverts). CLAUDE.md rule 7 updated to follow that setting.
 - Live 2026-10-28 on a test slot: card v1 (A Pain / B Contrarian, B-roll + on-screen, 74 words ≈ 28 s), choosing A → Script Chosen with Final script; re-run No-op.
 - `/plan-week` and new `/cards` wrap the CLI. `/write` and `/revise` stay for Approved ideas outside the weekly plan.
+
+## P6 log
+- `news-radar`: `config/feeds.toml` (8 feeds, stdlib RSS/Atom parser), last 48 h, dedupe by `news:<canonical URL>`, `news_judge.v1` (Haiku) keeps at most the daily cap (Engine Settings "News candidates per day", counted per day). Rows: Approval Pending, brand fit + reason, angle, urgency, time-sensitive, expires.
+- Approved candidates without an idea → Raw Content row (Discovered via News, provenance) + Idea (Origin News, Status Approved, Priority Time-sensitive when flagged, brand fit pass from the threshold, News candidate relation). Rejected never become ideas.
+- Live 2026-10-28: 2,417 feed items → 40 new → 5 real candidates written (Pending) across two runs (cap 5/day respected, no duplicates). Test approval → idea + raw created; re-run No-op.
+- `/news` slash command wraps the CLI.

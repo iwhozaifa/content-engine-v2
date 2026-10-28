@@ -98,3 +98,7 @@ extras = false              # [notion] "Production extras": On = B-roll, on-scre
 youtube = "Title ≤ 60 characters, 3 options. Description 2–3 short lines. 3–5 hashtags incl. #shorts."
 instagram = "Caption: hook line, 2–4 short lines, CTA. 5–8 hashtags at the end."
 tiktok = "Caption ≤ 150 characters incl. hashtags. 3–5 hashtags."
+
+[news]
+lookback_hours = 48         # only items published in this window
+max_items_to_judge = 40     # newest first, after dedupe (cost control)

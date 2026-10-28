@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["keep"],
+  "properties": {
+    "keep": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["n", "why_it_matters", "brand_fit", "reason", "suggested_angle", "pillar", "urgency",
+                     "time_sensitive", "expires_in_days"],
+        "properties": {
+          "n": {"type": "integer"},
+          "why_it_matters": {"type": "string"},
+          "brand_fit": {"type": "number", "minimum": 0, "maximum": 10},
+          "reason": {"type": "string"},
+          "suggested_angle": {"type": "string"},
+          "pillar": {"type": "string"},
+          "urgency": {"type": "string", "enum": ["High", "Medium", "Low"]},
+          "time_sensitive": {"type": "boolean"},
+          "expires_in_days": {"type": "integer", "minimum": 0}
+        }
+      }
+    }
+  }
+}

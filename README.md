@@ -48,6 +48,7 @@ git config core.hooksPath scripts/hooks    # secret scan + tests before each com
 | Weekly plan (Fridays) | `cli.py weekly-plan` | Content Plan, Weekly Plans |
 | Content cards | `cli.py generate-cards --locked` | Scripts (= content cards) |
 | Change a setting | `cli.py settings-set "Production extras" On` | Engine Settings |
+| News radar (daily) | `cli.py news-radar` | News Candidates, approved → ideas |
 
 Every command is a **dry-run unless you add `--apply`**. A dry-run prints what would change and saves it to `logs/changeset-*.json`. Re-running a command never duplicates rows. Each run is logged to `logs/runs.jsonl` (and to the Notion Run Log with `--apply`).
 
