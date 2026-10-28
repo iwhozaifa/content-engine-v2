@@ -77,3 +77,12 @@ generate_cards = 5
 [notify]
 enabled = false
 channel = "telegram"        # telegram | email
+
+[fit_weights]               # DNA §11 idea scoring weights (Pillar fit decides the pillar, not weighted)
+brand_fit = 20
+audience_fit = 20
+trend_signal = 15
+phase_fit = 15
+originality = 10
+novelty = 10
+scriptability = 10

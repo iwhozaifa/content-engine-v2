@@ -4,6 +4,17 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com), ver
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-28 (P2 Must-Do URLs + brand fit)
+
+### Added
+- `add-url`: Must-Do priority, canonical-URL dedupe, Needs Input on fetch failure with resume from a pasted transcript (`--from-notion`), topic merge/flag, brand fit + fit score, outline-only idea pages.
+- `score`: brand fit 0–10, reason, pass/fail (threshold from Engine Settings), transformative angle, fit score.
+- Prompts `idea_extract.v1`, `brand_fit.v1`; `services/brand.py`, `services/ingest.py` (fetch cache in `raw/fetch/`), `services/props.py`.
+- `tools/fetch.py` uses `ENGINE_COOKIES_FILE` (cookies.txt) when set, for servers without a browser.
+
+### Changed
+- `/add-url` and `/score` slash commands call the CLI.
+
 ## [0.3.0] - 2026-10-28 (P1 Notion schema)
 
 ### Added

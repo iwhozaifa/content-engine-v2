@@ -166,7 +166,7 @@ class Claude:
         tools = ",".join(prompt.meta.get("tools", []))
         cmd = [self.binary, "-p", "--output-format", "json", "--model", model,
                "--tools", tools, "--no-session-persistence",
-               "--json-schema", json.dumps(prompt.schema),
+               "--json-schema", json.dumps({k: v for k, v in prompt.schema.items() if k != "$schema"}),
                "--max-budget-usd", str(self.settings.get("claude.budget_usd_per_call", 1.0))]
         if tools:
             cmd += ["--allowedTools", tools]

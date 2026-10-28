@@ -7,7 +7,7 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 | Baseline | main | Done | v0.1.0 |
 | P0 Foundation | feature/p0-foundation | Merged | v0.2.0 |
 | P1 Notion schema | feature/p1-notion-schema | Merged | v0.3.0 |
-| P2 Must-Do + brand fit | feature/p2-mustdo-brandfit | Not started | |
+| P2 Must-Do + brand fit | feature/p2-mustdo-brandfit | Merged | v0.4.0 |
 | P3 Creator scan | feature/p3-creator-scan | Not started | |
 | P4 Weekly plan + topic locking | feature/p4-weekly-plan | Not started | |
 | P5 Content cards | feature/p5-content-cards | Not started | |
@@ -43,3 +43,12 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 - Applied 2026-10-28: created Run Log, News Candidates, Weekly Plans; 12 property/option changes; Engine Settings "Engine v3 settings" table (4 rows); 3 Brand Profile sections.
 - Re-run with `--apply` → "nothing to change". Snapshots: `schema/snapshots/2026-10-28-pre-p1` → `-post-p1`. Run Log rows now written to Notion on `--apply`.
 - Existing rows/formulas untouched; `/add-url` flow uses only pre-existing properties, so it is unaffected.
+
+## P2 log
+- `add-url` (CLI args, `--must-do`, `--transcript-file`, `--from-notion` for Raw Content rows Status New and Needs Input rows with a pasted transcript), `score`. Prompts `idea_extract.v1` (Sonnet), `brand_fit.v1` (Haiku). Fit score uses DNA §11 weights from `[fit_weights]`.
+- Brand fit pass = score ≥ `brand_fit.threshold` (Engine Settings) and no blocking red flag; decided in code.
+- Failed fetch → Raw Content + idea with Status Needs Input (Priority kept); after a transcript is pasted, `--from-notion` completes the same idea (no duplicate). If it turns out to be the same topic as an open idea, it merges and the placeholder is archived.
+- Dedupe: canonical URL (works across rows created by the old slash command), Engine key `url:<canonical>`, and topic duplicates (merge ≥ 0.8, flag ≥ 0.5).
+- Live test 2026-10-28: article → Shortlisted (fit 7.5, brand 8 ✓); dead link → Needs Input; pasted transcript → Shortlisted; re-runs → skip only. Test rows archived; one test merge into your real idea was reverted.
+- `/add-url` and `/score` are now thin wrappers over the CLI. Raw Content gained a `Priority` property (migrate-schema).
+- Not run on your real ideas yet: `cli.py score --apply` will add brand fit to the 1 open legacy idea.

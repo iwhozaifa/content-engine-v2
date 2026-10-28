@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["brand_fit", "reason", "pillar", "content_job", "transformative_angle", "differentiation_note",
+               "red_flags", "needs_creator_proof"],
+  "properties": {
+    "brand_fit": {"type": "number", "minimum": 0, "maximum": 10},
+    "reason": {"type": "string"},
+    "pillar": {"type": "string"},
+    "content_job": {"type": "string", "enum": ["Reach", "Trust", "Conversion"]},
+    "transformative_angle": {"type": "string"},
+    "differentiation_note": {"type": "string"},
+    "red_flags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["flag", "severity"],
+        "properties": {"flag": {"type": "string"}, "severity": {"type": "string", "enum": ["block", "warn"]}}
+      }
+    },
+    "needs_creator_proof": {"type": "boolean"}
+  }
+}

@@ -13,25 +13,43 @@ class FakeNotion:
         self.sources = {}     # data_source_id -> {"properties": {...}}
         self.blocks = {}      # page_id -> [blocks]
         self.databases = {}   # database_id -> {"id", "data_sources": [{"id"}]}
+        self.texts = {}       # page_id -> page_text
 
     def _guard(self, op):
         if not self.writable:
             from services.notion import ReadOnlyError
             raise ReadOnlyError(op)
 
+    def add(self, data_source_id, properties, pid=None):
+        """Seed a page (API-shaped properties are built from write payloads)."""
+        pid = pid or uuid.uuid4().hex
+        self.pages[pid] = {"id": pid, "parent_ds": data_source_id, "properties": {}, "last_edited_time": "t0",
+                           "children": []}
+        self.pages[pid]["properties"].update(api_props(properties))
+        return self.pages[pid]
+
     def create_page(self, data_source_id, properties, children=None):
         self._guard("create_page")
-        pid = uuid.uuid4().hex
-        self.pages[pid] = {"id": pid, "parent_ds": data_source_id, "properties": properties,
-                           "last_edited_time": "t0"}
+        page = self.add(data_source_id, properties)
+        page["children"] = children or []
         self.writes.append(("create", data_source_id, properties))
-        return self.pages[pid]
+        return page
 
     def update_page(self, page_id, properties):
         self._guard("update_page")
-        self.pages[page_id]["properties"].update(properties)
+        self.pages[page_id]["properties"].update(api_props(properties))
+        self.pages[page_id]["last_edited_time"] = uuid.uuid4().hex[:6]
         self.writes.append(("update", page_id, properties))
         return self.pages[page_id]
+
+    def query(self, data_source_id, filter=None, sorts=None, limit=None):
+        from services.props import values
+        rows = [p for p in self.pages.values() if p["parent_ds"] == data_source_id
+                and (filter is None or _match(filter, values(p)))]
+        return iter(rows[:limit] if limit else rows)
+
+    def page_text(self, page_id):
+        return self.texts.get(page_id, "")
 
     def update_data_source(self, data_source_id, body):
         self._guard("update_data_source")
@@ -69,6 +87,43 @@ class FakeNotion:
 
     def page_table_rows(self, page_id):
         return self.table_rows.get(page_id, [])
+
+
+def api_props(payload):
+    """Write payload -> the shape the API returns when reading a page."""
+    out = {}
+    for name, v in payload.items():
+        if not isinstance(v, dict):  # plain values used by simple tests
+            out[name] = v
+            continue
+        t = next(iter(v))
+        body = v[t]
+        if t in ("title", "rich_text"):
+            body = [{**r, "plain_text": r["text"]["content"]} for r in body]
+        out[name] = {"type": t, t: body}
+    return out
+
+
+def _match(flt, v):
+    if "or" in flt:
+        return any(_match(f, v) for f in flt["or"])
+    if "and" in flt:
+        return all(_match(f, v) for f in flt["and"])
+    value = v.get(flt["property"])
+    cond = next(iter(x for k, x in flt.items() if k != "property"))
+    if "equals" in cond:
+        return value == cond["equals"]
+    if "is_not_empty" in cond:
+        return bool(value)
+    if "is_empty" in cond:
+        return not value
+    if "contains" in cond:
+        return cond["contains"] in (value or [])
+    if "on_or_after" in cond:
+        return bool(value) and value >= cond["on_or_after"]
+    if "on_or_before" in cond:
+        return bool(value) and value <= cond["on_or_before"]
+    raise NotImplementedError(cond)
 
 
 def _live(payload):

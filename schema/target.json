@@ -72,7 +72,8 @@
         "Engine trend score": {"type": "number"},
         "Rich topic": {"type": "checkbox"},
         "Rich reason": {"type": "rich_text"},
-        "Topic label": {"type": "rich_text"}
+        "Topic label": {"type": "rich_text"},
+        "Priority": {"type": "select", "options": ["Must-Do", "Time-sensitive", "Normal"]}
       }
     },
     "idea_bank": {

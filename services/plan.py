@@ -96,7 +96,8 @@ class ChangeSet:
 
     def to_dict(self):
         return {"command": self.command, "counts": self.counts(),
-                "changes": [{k: v for k, v in asdict(c).items() if k != "after"} for c in self.changes],
+                "changes": [{k: (None if callable(v) else v) for k, v in asdict(c).items() if k != "after"}
+                            for c in self.changes],
                 "skipped": self.skipped}
 
     def save(self, logs=None):
@@ -114,6 +115,11 @@ class ChangeSet:
             if c.status != "pending":
                 continue
             try:
+                # Deferred payloads: built at apply time, once the rows they link to exist.
+                if callable(c.properties):
+                    c.properties = c.properties()
+                if callable(c.children):
+                    c.children = c.children()
                 db = ids["databases"].get(c.db, {})
                 if c.op == "create":
                     page = notion.create_page(db["data_source"], c.properties, c.children)

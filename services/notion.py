@@ -142,6 +142,28 @@ class Notion:
                 rows.extend(self.page_table_rows(block["id"]))
         return rows
 
+    def page_text(self, page_id, depth=2):
+        """A page body as plain markdown-ish text (headings, paragraphs, lists, tables, toggles)."""
+        lines = []
+        for block in self.children(page_id):
+            t = block["type"]
+            body = block.get(t, {})
+            if t == "table":
+                for row in self.children(block["id"]):
+                    if row["type"] == "table_row":
+                        lines.append(" | ".join(plain(c) for c in row["table_row"]["cells"]))
+                continue
+            text = plain(body.get("rich_text"))
+            if t.startswith("heading_"):
+                lines.append("#" * int(t[-1]) + " " + text)
+            elif t in ("bulleted_list_item", "numbered_list_item", "to_do"):
+                lines.append("- " + text)
+            elif text:
+                lines.append(text)
+            if block.get("has_children") and depth > 0 and t not in ("child_page", "child_database"):
+                lines.append(self.page_text(block["id"], depth - 1))
+        return "\n".join(l for l in lines if l)
+
     # -- writes (blocked unless writable) ---------------------------------------
     def create_page(self, data_source_id, properties, children=None):
         body = {"parent": {"type": "data_source_id", "data_source_id": data_source_id}, "properties": properties}
@@ -157,6 +179,10 @@ class Notion:
 
     def update_data_source(self, data_source_id, body):
         return self.request("PATCH", f"/data_sources/{data_source_id}", body)
+
+    def archive_page(self, page_id):
+        """Move a page to Notion's trash (restorable). Only used for engine-test rows."""
+        return self.request("PATCH", f"/pages/{page_id}", {"in_trash": True})
 
     def append_children(self, block_id, children):
         return self.request("PATCH", f"/blocks/{block_id}/children", {"children": children})

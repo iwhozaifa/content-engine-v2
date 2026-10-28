@@ -5,6 +5,8 @@
   .venv/bin/python cli.py settings-check        merged settings and where each value came from
   .venv/bin/python cli.py snapshot-schema       save live Notion schemas to schema/snapshots/
   .venv/bin/python cli.py migrate-schema        add what schema/target.json needs (additive)
+  .venv/bin/python cli.py add-url <url> [--must-do]   links -> Raw Content + Idea Bank (brand fit, dedupe)
+  .venv/bin/python cli.py score                 (re)score ideas: brand fit, pass/fail, fit score
 """
 import argparse
 import importlib
@@ -18,6 +20,8 @@ COMMANDS = {
     "settings-check": "commands.settings_check",
     "snapshot-schema": "commands.snapshot_schema",
     "migrate-schema": "commands.migrate_schema",
+    "add-url": "commands.add_url",
+    "score": "commands.score",
 }
 
 

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["topic", "source_first_line", "hook_pattern", "outline", "key_points", "idea_title", "pillar",
+               "content_job", "topic_tags", "cluster", "why_it_works", "suggested_hook", "differentiation_note",
+               "audience_pain", "key_claims", "needs_creator_proof", "scores", "duplicate", "off_brand",
+               "off_brand_reason"],
+  "properties": {
+    "topic": {"type": "string"},
+    "source_first_line": {"type": "string"},
+    "hook_pattern": {"type": "string"},
+    "outline": {"type": "array", "items": {"type": "string"}, "minItems": 1, "maxItems": 8},
+    "key_points": {"type": "array", "items": {"type": "string"}, "maxItems": 10},
+    "idea_title": {"type": "string"},
+    "pillar": {"type": "string"},
+    "content_job": {"type": "string", "enum": ["Reach", "Trust", "Conversion"]},
+    "topic_tags": {"type": "array", "items": {"type": "string"}, "maxItems": 4},
+    "cluster": {"type": "string"},
+    "why_it_works": {"type": "string"},
+    "suggested_hook": {"type": "string"},
+    "differentiation_note": {"type": "string"},
+    "audience_pain": {"type": "string"},
+    "key_claims": {"type": "string"},
+    "needs_creator_proof": {"type": "boolean"},
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["audience_fit", "phase_fit", "pillar_fit", "trend_signal", "novelty", "originality", "scriptability"],
+      "properties": {
+        "audience_fit": {"type": "number", "minimum": 1, "maximum": 10},
+        "phase_fit": {"type": "number", "minimum": 1, "maximum": 10},
+        "pillar_fit": {"type": "number", "minimum": 1, "maximum": 10},
+        "trend_signal": {"type": "number", "minimum": 1, "maximum": 10},
+        "novelty": {"type": "number", "minimum": 1, "maximum": 10},
+        "originality": {"type": "number", "minimum": 1, "maximum": 10},
+        "scriptability": {"type": "number", "minimum": 1, "maximum": 10}
+      }
+    },
+    "duplicate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["i", "confidence"],
+      "properties": {"i": {"type": "integer"}, "confidence": {"type": "number", "minimum": 0, "maximum": 1}}
+    },
+    "off_brand": {"type": "boolean"},
+    "off_brand_reason": {"type": "string"}
+  }
+}

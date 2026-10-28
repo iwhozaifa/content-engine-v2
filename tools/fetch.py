@@ -91,7 +91,10 @@ def classify(stderr):
 
 def run_ytdlp(args, browser, use_login):
     cmd = [tool("yt-dlp"), "--no-warnings", "--no-playlist", *args]
-    if use_login:
+    cookies = os.environ.get("ENGINE_COOKIES_FILE", "")
+    if use_login and cookies and Path(cookies).exists():
+        cmd[1:1] = ["--cookies", cookies]  # servers: exported cookies.txt instead of a browser
+    elif use_login:
         cmd[1:1] = ["--cookies-from-browser", browser]
     return subprocess.run(cmd, capture_output=True, text=True, timeout=300)
 
