@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["youtube", "instagram", "tiktok", "thumbnails"],
+  "properties": {
+    "youtube": {"type": "object", "additionalProperties": false, "required": ["titles", "description", "hashtags"],
+                "properties": {"titles": {"type": "array", "items": {"type": "string"}, "minItems": 3, "maxItems": 3},
+                               "description": {"type": "string"}, "hashtags": {"type": "array", "items": {"type": "string"}}}},
+    "instagram": {"type": "object", "additionalProperties": false, "required": ["caption", "hashtags"],
+                  "properties": {"caption": {"type": "string"}, "hashtags": {"type": "array", "items": {"type": "string"}}}},
+    "tiktok": {"type": "object", "additionalProperties": false, "required": ["caption", "hashtags"],
+               "properties": {"caption": {"type": "string"}, "hashtags": {"type": "array", "items": {"type": "string"}}}},
+    "thumbnails": {"type": "array", "minItems": 3, "maxItems": 3,
+                   "items": {"type": "object", "additionalProperties": false, "required": ["text", "visual"],
+                             "properties": {"text": {"type": "string"}, "visual": {"type": "string"}}}}
+  }
+}

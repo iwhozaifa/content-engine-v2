@@ -1,18 +1,11 @@
 ---
-description: Propose next week's 5 videos into the Content Plan
+description: Plan next week's slots and lock topics (via the engine CLI)
 ---
 
-Read Engine Settings (Notion page), the Brand Voice & Style Guide (Notion page) and docs/brand/Aliyan_AI_Content_DNA.md first. Use the Notion MCP tools to read and write the databases, using the exact property names that exist there.
+Input: $ARGUMENTS = optional week start (a Monday, YYYY-MM-DD). Default: the Monday after today.
 
-Plan next week (Mon–Fri, 5 videos) from Idea Bank rows with Status = Scripted whose latest script is Approved.
+1. Dry-run: `.venv/bin/python cli.py weekly-plan [--week YYYY-MM-DD]`. It fills the open slots from Engine Settings "Cadence" in this order: Must-Do ideas → approved news ideas → Shortlisted/Approved creator ideas that pass brand fit (one per cluster). Each placement gets a Content Plan row with Status Topic Locked, Approval Pending and a Suggested post date, and the idea moves to Topic Locked. A Weekly Plans page lists the week.
+2. If the dry-run looks right, run the same command with `--apply`.
+3. Show the slot list it prints, any Must-Do that didn't fit, and remind me that approval is mine (Content Plan → Approval).
 
-Constraints:
-- Over the rolling last 4 weeks, aim for my pillar weights (45/25/20/10) and job weights (Reach 50 / Trust 35 / Conversion 15). Don't force exact numbers if it means using weak ideas.
-- Max 1 Conversion video this week (current phase rule).
-- No topic that is a near-duplicate of anything in the Content Plan from the last 60 days.
-- Prefer a strong original angle over a high-trend idea that fits badly.
-- Flag any idea that needs my proof BEFORE it goes in the plan.
-
-Output a table: Day, Date, Video, Pillar, Job, Template, CTA (from my CTA Bank), Brand fit, Differentiation note, Source inspiration, Creator input required. Below it, one line on the pillar/job mix this week vs target.
-
-Then wait. When I reply "approve" (or approve with swaps, e.g. "swap Wed for something on AI agents"), create the rows in the Content Plan with Status = Planned and link Idea + Approved script on each row, and set those Idea Bank rows to Status = In Production.
+No scripts are written here. Cards come from `/cards`.

@@ -18,10 +18,10 @@ Rules:
 4. My edits are final. Never reword a line I changed unless I ask.
 5. Every idea keeps its Sources relation (provenance).
 6. Approval is mine. Don't set an idea to Approved, a script to Approved, or anything Published without my word. /write only runs on ideas I already set to Approved.
-7. Scripts are spoken lines only for now: no B-roll, on-screen text, titles, hashtags or thumbnails, until Engine Settings switches production extras on.
+7. Scripts are spoken lines only unless Engine Settings "Production extras" is On (switched On 2026-10-28 for engine content cards: B-roll, on-screen text, captions, titles, thumbnails). If it is Off, cards are spoken lines only.
 8. If a step fails, record it on the row (Fetch status / Fetch error, or a note), finish the rest, and report what failed at the end.
 
-Slash commands: /migrate (phase 0, once) · /add-url · /score · /research · /write · /revise · /options · /plan-week · /carousel
+Slash commands: /migrate (phase 0, once) · /add-url · /score · /plan-week · /cards · /research · /write · /revise · /options · /carousel (/write and /revise remain for Approved ideas outside the weekly plan; /cards is the v3 flow)
 
 ## Engine CLI (v3)
 
@@ -37,6 +37,8 @@ Slash commands: /migrate (phase 0, once) · /add-url · /score · /research · /
 | `score [titles…] [--rescore]` | P2 | Idea Bank brand fit + fit score |
 | `scan-creators [--creator x] [--state Active]` | P3 | Creator baselines, Raw Content (trend candidates; rich topics queued as Status New) |
 | `weekly-plan [--week YYYY-MM-DD]` | P4 | Content Plan slots (Topic Locked, Approval Pending, Suggested post date), Idea Status, Weekly Plans page |
+| `generate-cards --locked` / `generate-card <title>` | P5 | Scripts (cards A/B + captions), slot/idea status; also revisions and A/B choices |
+| `settings-set <row> <value>` | P5 | one Engine Settings cell |
 
 Layout: `commands/` (one module per CLI command), `services/` (notion, claude, settings, plan, runlog, retry), `prompts/` (`<name>.v<N>.md` + `.schema.json`, never inline prompt strings), `config/` (`settings.toml` defaults, `notion_ids.toml`), `schema/` (Notion schema snapshots), `tests/`.
 

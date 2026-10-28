@@ -4,6 +4,17 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com), ver
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-10-28 (P5 content cards)
+
+### Added
+- `generate-cards --locked` / `generate-card`: Variation A and B (different hook families and angles), B-roll and on-screen text, per-platform captions and titles, thumbnail concepts, originality check, Chosen variation → Script Chosen, feedback → next version with edited lines kept and history (Previous version, Superseded).
+- Prompts `script_variations.v1`, `captions.v1`, `similarity_judge.v1`; `services/cards.py`.
+- `settings-set` command; Engine Settings overrides for "Production extras" and "Default length (s)".
+- `/cards` slash command; `/plan-week` now wraps `weekly-plan`.
+
+### Changed
+- Production extras On in Engine Settings; CLAUDE.md rule 7 follows that setting.
+
 ## [0.6.0] - 2026-10-28 (P4 weekly plan)
 
 ### Added

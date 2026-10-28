@@ -180,6 +180,20 @@ class Notion:
     def update_data_source(self, data_source_id, body):
         return self.request("PATCH", f"/data_sources/{data_source_id}", body)
 
+    def update_block(self, block_id, body):
+        return self.request("PATCH", f"/blocks/{block_id}", body)
+
+    def table_row_blocks(self, page_id):
+        """(block, [cell texts]) for every table row on a page (one level of nesting), for in-place edits."""
+        out = []
+        for block in self.children(page_id):
+            if block["type"] == "table":
+                out += [(row, [plain(c) for c in row["table_row"]["cells"]])
+                        for row in self.children(block["id"]) if row["type"] == "table_row"]
+            elif block.get("has_children") and block["type"] in ("toggle", "column_list", "column", "callout"):
+                out += self.table_row_blocks(block["id"])
+        return out
+
     def archive_page(self, page_id):
         """Move a page to Notion's trash (restorable). Only used for engine-test rows."""
         return self.request("PATCH", f"/pages/{page_id}", {"in_trash": True})

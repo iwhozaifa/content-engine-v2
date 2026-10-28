@@ -10,7 +10,7 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 | P2 Must-Do + brand fit | feature/p2-mustdo-brandfit | Merged | v0.4.0 |
 | P3 Creator scan | feature/p3-creator-scan | Merged | v0.5.0 |
 | P4 Weekly plan + topic locking | feature/p4-weekly-plan | Merged | v0.6.0 |
-| P5 Content cards | feature/p5-content-cards | Not started | |
+| P5 Content cards | feature/p5-content-cards | Merged | v0.7.0 |
 | P6 News radar | feature/p6-news-radar | Not started | |
 | P7 Approval + reschedule | feature/p7-reschedule | Not started | |
 | P8 Scheduling, notifications, hardening | feature/p8-scheduling-hardening | Not started | |
@@ -67,3 +67,11 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 - Each placement: Content Plan row (Slot key, Status Topic Locked, Topic locked ✓, Locked at, Approval Pending, Added to calendar, Suggested post date = slot date + offset, rationale), Idea → Topic Locked, Weekly Plans page (`week:<ISO week>`) with the slot list. No scripts.
 - Legacy rows without a Slot key still occupy their day. Re-run → no-op.
 - Live 2026-10-28 on test week 2027-W01 with 8 `[engine-test]` ideas: order Must-Do, Must-Do, News, Creator 0, Creator 1; brand-fit fail skipped; post dates slot+3; re-run No-op. Test rows kept for the P5/P7 live tests, then archived.
+
+## P5 log
+- `generate-cards --locked` / `generate-card <title>`: `script_variations.v1` (Sonnet) writes A and B; code requires different hook families and angles (one retry). `captions.v1` (Haiku) writes YouTube/Instagram/TikTok packages + 3 thumbnail concepts when production extras are On. Originality: `tools/engine.py` similarity first; `similarity_judge.v1` only when flagged.
+- Card = Scripts row (Card key `card:<idea>#v<n>`, Plan item, Hook/Angle A/B, flags A/B, Prompt versions) with tables A1…/B1…, ready-to-read, captions, and an "Engine data" toggle holding the generated JSON.
+- Chosen variation → card + slot Script Chosen, slot Final script (from the page, your edits included), idea Scripted. Needs revision + Feedback → v+1 (edited lines restored word for word in code), v1 Superseded and unlinked from the slot.
+- `settings-set` edits one Engine Settings cell. Production extras switched **On** 2026-10-28 (`cli.py settings-set "Production extras" Off --apply` reverts). CLAUDE.md rule 7 updated to follow that setting.
+- Live 2026-10-28 on a test slot: card v1 (A Pain / B Contrarian, B-roll + on-screen, 74 words ≈ 28 s), choosing A → Script Chosen with Final script; re-run No-op.
+- `/plan-week` and new `/cards` wrap the CLI. `/write` and `/revise` stay for Approved ideas outside the weekly plan.

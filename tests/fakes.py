@@ -28,10 +28,26 @@ class FakeNotion:
         self.pages[pid]["properties"].update(api_props(properties))
         return self.pages[pid]
 
+    def _register(self, parent_id, children):
+        """Store blocks like the API: each gets an id; nested children are listed under that id."""
+        out = []
+        for b in children or []:
+            b = {**b, "id": uuid.uuid4().hex}
+            t = b["type"]
+            nested = b.get(t, {}).get("children")
+            if nested:
+                b[t] = {k: v for k, v in b[t].items() if k != "children"}
+                b["has_children"] = True
+                self._register(b["id"], nested)
+            out.append(b)
+        self.blocks[parent_id] = self.blocks.get(parent_id, []) + out
+        return out
+
     def create_page(self, data_source_id, properties, children=None):
         self._guard("create_page")
         page = self.add(data_source_id, properties)
         page["children"] = children or []
+        self._register(page["id"], children)
         self.writes.append(("create", data_source_id, properties))
         return page
 
@@ -78,15 +94,29 @@ class FakeNotion:
 
     def append_children(self, block_id, children):
         self._guard("append_children")
-        self.blocks.setdefault(block_id, []).extend(children)
+        self._register(block_id, children)
         self.writes.append(("blocks", block_id, children))
+        return {}
+
+    def table_row_blocks(self, page_id):
+        from services.notion import Notion
+        return Notion.table_row_blocks(self, page_id)
+
+    def update_block(self, block_id, body):
+        self._guard("update_block")
+        self.writes.append(("block", block_id, body))
         return {}
 
     def get_page(self, page_id):
         return self.pages[page_id]
 
     def page_table_rows(self, page_id):
-        return self.table_rows.get(page_id, [])
+        if page_id in self.table_rows:
+            return self.table_rows[page_id]
+        from services.notion import plain
+        return [[plain(c) for c in row["table_row"]["cells"]]
+                for b in self.blocks.get(page_id, []) if b["type"] == "table"
+                for row in self.blocks.get(b["id"], [])]
 
 
 def api_props(payload):

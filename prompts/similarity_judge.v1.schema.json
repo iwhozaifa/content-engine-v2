@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["verdict", "lifted", "rewrite_hints"],
+  "properties": {
+    "verdict": {"type": "string", "enum": ["OK", "Review", "Too close"]},
+    "lifted": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["type", "line"],
+               "properties": {"type": {"type": "string", "enum": ["wording", "example", "story", "number", "structure"]},
+                              "line": {"type": "string"}}}},
+    "rewrite_hints": {"type": "array", "items": {"type": "string"}, "maxItems": 3}
+  }
+}

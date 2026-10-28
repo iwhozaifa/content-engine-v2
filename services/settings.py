@@ -69,6 +69,15 @@ def too_close(text):
     return out
 
 
+def on_off(text):
+    word = first_word(text).lower()
+    if word in ("on", "yes", "true", "enabled"):
+        return True
+    if word in ("off", "no", "false", "disabled"):
+        return False
+    raise ValueError(f"expected On or Off in {text!r}")
+
+
 # Engine Settings row label (case-insensitive, prefix match) -> (settings key, parser).
 # A parser returning a dict sets several keys under the key's section.
 OVERRIDES = {
@@ -92,6 +101,8 @@ OVERRIDES = {
     "post-date offset (days)": ("post_date.offset_days", first_number),
     "post-date base": ("post_date.base", first_word),
     "news candidates per day": ("caps.news_radar", first_number),
+    "production extras": ("production.extras", on_off),
+    "default length (s)": ("script.length_s", number_list(2)),
 }
 
 

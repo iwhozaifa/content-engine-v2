@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["variations"],
+  "properties": {
+    "variations": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["label", "angle", "hook_family", "hook", "hook_alts", "beats", "cta", "cta_alt", "creator_input_required"],
+        "properties": {
+          "label": {"type": "string", "enum": ["A", "B"]},
+          "angle": {"type": "string"},
+          "hook_family": {"type": "string"},
+          "hook": {"type": "string"},
+          "hook_alts": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 2},
+          "beats": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 7,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["line", "alt_lines", "broll", "on_screen"],
+              "properties": {
+                "line": {"type": "string"},
+                "alt_lines": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 2},
+                "broll": {"type": "string"},
+                "on_screen": {"type": "string"}
+              }
+            }
+          },
+          "cta": {"type": "string"},
+          "cta_alt": {"type": "string"},
+          "creator_input_required": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

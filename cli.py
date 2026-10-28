@@ -9,6 +9,8 @@
   .venv/bin/python cli.py score                 (re)score ideas: brand fit, pass/fail, fit score
   .venv/bin/python cli.py scan-creators         Active creators -> baselines, trend scores, rich topics
   .venv/bin/python cli.py weekly-plan           fill next week's slots, lock topics, Weekly Plans page
+  .venv/bin/python cli.py generate-cards --locked   A/B content cards for locked topics (+ revisions, choices)
+  .venv/bin/python cli.py settings-set <row> <value>  change one Engine Settings value
 """
 import argparse
 import importlib
@@ -26,6 +28,9 @@ COMMANDS = {
     "score": "commands.score",
     "scan-creators": "commands.scan_creators",
     "weekly-plan": "commands.weekly_plan",
+    "generate-card": "commands.generate_cards",
+    "generate-cards": "commands.generate_cards",
+    "settings-set": "commands.settings_set",
 }
 
 

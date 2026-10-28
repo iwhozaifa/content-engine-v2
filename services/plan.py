@@ -64,6 +64,12 @@ class ChangeSet:
         self.changes.append(c)
         return c
 
+    def block(self, db, key, block_id, body, summary, reason=""):
+        """Edit one block in place (e.g. an Engine Settings table cell)."""
+        c = Change("block", db, key, body, summary, page_id=block_id, reason=reason)
+        self.changes.append(c)
+        return c
+
     def skip(self, key, reason):
         self.skipped.append((key, reason))
 
@@ -139,6 +145,8 @@ class ChangeSet:
                     c.result_id = notion.create_database(c.properties)["id"]
                 elif c.op == "blocks":
                     notion.append_children(c.page_id, c.children)
+                elif c.op == "block":
+                    notion.update_block(c.page_id, c.properties)
                 c.status = "done"
                 if c.after:
                     c.after(c)
