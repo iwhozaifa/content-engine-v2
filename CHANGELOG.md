@@ -4,6 +4,13 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com), ver
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-28 (P1 Notion schema)
+
+### Added
+- `migrate-schema`: diffs `schema/target.json` against live Notion and adds only what is missing (databases, properties, select options, Engine Settings rows, Brand Profile sections). Dry-run by default; idempotent.
+- Notion databases: Run Log, News Candidates, Weekly Plans. New properties on Content Creators, Raw Content, Idea Bank, Content Plan, Scripts.
+- `schema/ROLLBACK.md`, pre/post-P1 snapshots, manual view checklist (`migrate-schema --views`).
+
 ## [0.2.0] - 2026-10-28 (P0 foundation)
 
 ### Added

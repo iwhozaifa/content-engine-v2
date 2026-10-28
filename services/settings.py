@@ -180,6 +180,16 @@ def load_ids(path=CONFIG / "notion_ids.toml"):
         return tomllib.load(f)
 
 
+def save_db_ids(key, database, data_source, path=CONFIG / "notion_ids.toml"):
+    """Record a database created by the engine (idempotent: an existing key is left alone)."""
+    path = Path(path)
+    if key in tomllib.loads(path.read_text(encoding="utf-8")).get("databases", {}):
+        return False
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(f'\n[databases.{key}]\ndatabase = "{database}"\ndata_source = "{data_source}"\n')
+    return True
+
+
 def load_with_notion(notion, ids=None, path=CONFIG / "settings.toml"):
     """Defaults from file, overridden by the Engine Settings page. Errors are returned, not raised,
     so a broken Notion row never stops a run."""

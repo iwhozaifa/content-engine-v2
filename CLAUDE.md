@@ -32,6 +32,7 @@ Slash commands: /migrate (phase 0, once) · /add-url · /score · /research · /
 | `ping [--claude]` | P0 | no: checks Notion access, stored IDs, claude CLI |
 | `settings-check [--file-only]` | P0 | no: merged settings and their source (file / Engine Settings row) |
 | `snapshot-schema [--label x]` | P0 | local files only: `schema/snapshots/<date>/` |
+| `migrate-schema [--apply] [--views]` | P1 | schema only, additive (`schema/target.json`) |
 
 Layout: `commands/` (one module per CLI command), `services/` (notion, claude, settings, plan, runlog, retry), `prompts/` (`<name>.v<N>.md` + `.schema.json`, never inline prompt strings), `config/` (`settings.toml` defaults, `notion_ids.toml`), `schema/` (Notion schema snapshots), `tests/`.
 

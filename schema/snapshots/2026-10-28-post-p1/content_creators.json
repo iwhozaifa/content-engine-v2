@@ -1,0 +1,122 @@
+{
+  "database": "402826bb-cef5-801b-af32-c75994a2ab54",
+  "data_source": "402826bb-cef5-809d-ae20-000bd6912ee9",
+  "title": "Content Creators",
+  "properties": {
+    "Baseline engagement %": {
+      "type": "number",
+      "format": "number"
+    },
+    "Baseline posts": {
+      "type": "number",
+      "format": "number"
+    },
+    "Baseline updated": {
+      "type": "date"
+    },
+    "Baseline velocity": {
+      "type": "number",
+      "format": "number"
+    },
+    "Baseline views": {
+      "type": "number",
+      "format": "number"
+    },
+    "Hit rate": {
+      "type": "formula",
+      "expression": "if(prop(\"Ideas found\") == 0, 0, round(prop(\"Ideas approved\") / prop(\"Ideas found\") * 100))"
+    },
+    "Ideas": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-809b-8886-000b9d3c4873",
+      "kind": "single_property"
+    },
+    "Ideas approved": {
+      "type": "rollup",
+      "relation_property_name": "Ideas",
+      "rollup_property_name": "Is approved",
+      "function": "checked"
+    },
+    "Ideas found": {
+      "type": "rollup",
+      "relation_property_name": "Ideas",
+      "rollup_property_name": "Idea",
+      "function": "count"
+    },
+    "Last scanned": {
+      "type": "date"
+    },
+    "Lock baseline": {
+      "type": "checkbox"
+    },
+    "Name": {
+      "type": "title"
+    },
+    "Niche": {
+      "type": "multi_select",
+      "options": [
+        "AI to Income",
+        "AI Leverage",
+        "Proof / Journey",
+        "Psychology of Execution"
+      ]
+    },
+    "Notes": {
+      "type": "rich_text"
+    },
+    "Other profiles": {
+      "type": "rich_text"
+    },
+    "Platforms": {
+      "type": "multi_select",
+      "options": [
+        "Instagram",
+        "TikTok",
+        "YouTube",
+        "X",
+        "Blog"
+      ]
+    },
+    "Priority": {
+      "type": "select",
+      "options": [
+        "High",
+        "Medium",
+        "Low"
+      ]
+    },
+    "Profile URL": {
+      "type": "url"
+    },
+    "Raw Content": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-8054-b1e1-000b9a01bb22",
+      "kind": "dual_property"
+    },
+    "Scan error": {
+      "type": "rich_text"
+    },
+    "State": {
+      "type": "select",
+      "options": [
+        "Suggested",
+        "Active",
+        "Paused",
+        "Removed"
+      ]
+    },
+    "Suggested by": {
+      "type": "select",
+      "options": [
+        "Me",
+        "Claude"
+      ]
+    },
+    "Suggestion reason": {
+      "type": "rich_text"
+    },
+    "YouTube channel ID": {
+      "type": "rich_text"
+    }
+  }
+}

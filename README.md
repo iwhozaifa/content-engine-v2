@@ -41,6 +41,7 @@ git config core.hooksPath scripts/hooks    # secret scan + tests before each com
 | Check | `cli.py ping [--claude]` | never |
 | Settings | `cli.py settings-check` | never |
 | Schema snapshot | `cli.py snapshot-schema --label <x>` | never (local files) |
+| Schema migration | `cli.py migrate-schema [--views]` | additive schema changes |
 
 Every command is a **dry-run unless you add `--apply`**. A dry-run prints what would change and saves it to `logs/changeset-*.json`. Re-running a command never duplicates rows. Each run is logged to `logs/runs.jsonl` (and to the Notion Run Log with `--apply`).
 

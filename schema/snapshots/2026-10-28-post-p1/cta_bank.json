@@ -1,0 +1,22 @@
+{
+  "database": "402826bb-cef5-80ba-a003-df0c86523492",
+  "data_source": "402826bb-cef5-80ec-a6e1-000b3fd1c137",
+  "title": "CTA Bank.csv",
+  "properties": {
+    "CTA": {
+      "type": "title"
+    },
+    "Content job": {
+      "type": "rich_text"
+    },
+    "Exact wording": {
+      "type": "rich_text"
+    },
+    "Notes": {
+      "type": "rich_text"
+    },
+    "Objective": {
+      "type": "rich_text"
+    }
+  }
+}

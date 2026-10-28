@@ -10,6 +10,9 @@ class FakeNotion:
         self.pages = {}       # id -> {"id", "parent_ds", "properties", "last_edited_time"}
         self.writes = []      # (op, args) log
         self.table_rows = {}  # page_id -> rows
+        self.sources = {}     # data_source_id -> {"properties": {...}}
+        self.blocks = {}      # page_id -> [blocks]
+        self.databases = {}   # database_id -> {"id", "data_sources": [{"id"}]}
 
     def _guard(self, op):
         if not self.writable:
@@ -33,6 +36,32 @@ class FakeNotion:
     def update_data_source(self, data_source_id, body):
         self._guard("update_data_source")
         self.writes.append(("schema", data_source_id, body))
+        props = self.sources.setdefault(data_source_id, {"properties": {}})["properties"]
+        for name, v in body.get("properties", {}).items():
+            props[name] = _live(v)
+        return {}
+
+    def create_database(self, body):
+        self._guard("create_database")
+        db, ds = uuid.uuid4().hex, uuid.uuid4().hex
+        self.databases[db] = {"id": db, "data_sources": [{"id": ds}]}
+        self.sources[ds] = {"properties": {n: _live(v) for n, v in body["initial_data_source"]["properties"].items()}}
+        self.writes.append(("database", body["title"][0]["text"]["content"], body))
+        return self.databases[db]
+
+    def get_database(self, database_id):
+        return self.databases[database_id]
+
+    def get_data_source(self, data_source_id):
+        return self.sources[data_source_id]
+
+    def children(self, block_id):
+        return iter(self.blocks.get(block_id, []))
+
+    def append_children(self, block_id, children):
+        self._guard("append_children")
+        self.blocks.setdefault(block_id, []).extend(children)
+        self.writes.append(("blocks", block_id, children))
         return {}
 
     def get_page(self, page_id):
@@ -40,6 +69,15 @@ class FakeNotion:
 
     def page_table_rows(self, page_id):
         return self.table_rows.get(page_id, [])
+
+
+def _live(payload):
+    """Turn a property payload into what Notion would return (type + options with ids)."""
+    t = next(iter(payload))
+    body = dict(payload[t])
+    if "options" in body:
+        body["options"] = [{"id": o.get("id") or uuid.uuid4().hex[:4], "name": o["name"]} for o in body["options"]]
+    return {"type": t, t: body}
 
 
 class FakeClaude:

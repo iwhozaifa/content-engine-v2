@@ -1,0 +1,145 @@
+{
+  "database": "402826bb-cef5-8011-98f3-cc47a7cb07d7",
+  "data_source": "402826bb-cef5-80d0-9115-000b221bc602",
+  "title": "Content Plan",
+  "properties": {
+    "Added to calendar": {
+      "type": "date"
+    },
+    "Approval": {
+      "type": "select",
+      "options": [
+        "Pending",
+        "Approved",
+        "Postponed",
+        "Rejected"
+      ]
+    },
+    "Approved script": {
+      "type": "relation",
+      "data_source_id": "a9a00b83-73e0-49c0-90f8-eae15430b7d6",
+      "kind": "single_property"
+    },
+    "Brand fit": {
+      "type": "number",
+      "format": "number"
+    },
+    "Brand fit reason": {
+      "type": "rich_text"
+    },
+    "CTA": {
+      "type": "rich_text"
+    },
+    "Content card": {
+      "type": "relation",
+      "data_source_id": "a9a00b83-73e0-49c0-90f8-eae15430b7d6",
+      "kind": "dual_property"
+    },
+    "Content job": {
+      "type": "rich_text"
+    },
+    "Creator input required": {
+      "type": "checkbox"
+    },
+    "Date": {
+      "type": "date"
+    },
+    "Date history": {
+      "type": "rich_text"
+    },
+    "Day": {
+      "type": "rich_text"
+    },
+    "Final script": {
+      "type": "rich_text"
+    },
+    "Format": {
+      "type": "select",
+      "options": [
+        "Short"
+      ]
+    },
+    "Idea": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-809b-8886-000b9d3c4873",
+      "kind": "dual_property"
+    },
+    "Length target (s)": {
+      "type": "number",
+      "format": "number"
+    },
+    "Locked at": {
+      "type": "date"
+    },
+    "Origin": {
+      "type": "select",
+      "options": [
+        "Manual URL",
+        "Creator scan",
+        "News"
+      ]
+    },
+    "Original angle": {
+      "type": "rich_text"
+    },
+    "Original date": {
+      "type": "date"
+    },
+    "Pillar": {
+      "type": "rich_text"
+    },
+    "Platforms": {
+      "type": "multi_select",
+      "options": [
+        "Instagram",
+        "TikTok",
+        "YouTube Shorts"
+      ]
+    },
+    "Post date rationale": {
+      "type": "rich_text"
+    },
+    "Priority": {
+      "type": "select",
+      "options": [
+        "Must-Do",
+        "Time-sensitive",
+        "Normal"
+      ]
+    },
+    "Slot key": {
+      "type": "rich_text"
+    },
+    "Source inspiration": {
+      "type": "url"
+    },
+    "Status": {
+      "type": "select",
+      "options": [
+        "Planned",
+        "Topic Locked",
+        "Card Ready",
+        "Script Chosen",
+        "Ready to Post",
+        "Posted"
+      ]
+    },
+    "Suggested post date": {
+      "type": "date"
+    },
+    "Template": {
+      "type": "rich_text"
+    },
+    "Topic locked": {
+      "type": "checkbox"
+    },
+    "Video": {
+      "type": "title"
+    },
+    "Weekly plan": {
+      "type": "relation",
+      "data_source_id": "a7c3eea3-1085-4bef-8a92-a45c1271338f",
+      "kind": "dual_property"
+    }
+  }
+}

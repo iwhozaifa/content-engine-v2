@@ -1,0 +1,148 @@
+{
+  "_doc": "Target Notion schema. migrate-schema only ADDS what is missing (databases, properties, select options). It never removes or renames. Relations name the target by its key in config/notion_ids.toml; 'synced' is the property created on the other side of a dual relation.",
+  "databases": {
+    "run_log": {
+      "title": "Run Log",
+      "parent": "content_engine",
+      "properties": {
+        "Run": {"type": "title"},
+        "Command": {"type": "select", "options": ["ping", "migrate-schema", "add-url", "score", "scan-creators", "news-radar", "weekly-plan", "generate-cards", "generate-card", "reschedule"]},
+        "Mode": {"type": "select", "options": ["Dry-run", "Apply"]},
+        "Status": {"type": "select", "options": ["OK", "Partial", "Failed", "No-op"]},
+        "Started": {"type": "date"},
+        "Finished": {"type": "date"},
+        "Created": {"type": "number"},
+        "Updated": {"type": "number"},
+        "Skipped": {"type": "number"},
+        "Errors": {"type": "rich_text"},
+        "Est. cost (API-equiv $)": {"type": "number", "format": "dollar"},
+        "Tokens": {"type": "number"},
+        "Git SHA": {"type": "rich_text"},
+        "Host": {"type": "rich_text"},
+        "Settings used": {"type": "rich_text"}
+      }
+    },
+    "news_candidates": {
+      "title": "News Candidates",
+      "parent": "content_engine",
+      "properties": {
+        "Headline": {"type": "title"},
+        "Source URL": {"type": "url"},
+        "Engine key": {"type": "rich_text"},
+        "Source": {"type": "select", "options": []},
+        "Published": {"type": "date"},
+        "Summary": {"type": "rich_text"},
+        "Why it matters": {"type": "rich_text"},
+        "Brand fit": {"type": "number"},
+        "Brand fit reason": {"type": "rich_text"},
+        "Suggested angle": {"type": "rich_text"},
+        "Pillar": {"type": "rich_text"},
+        "Urgency": {"type": "select", "options": ["High", "Medium", "Low"]},
+        "Time-sensitive": {"type": "checkbox"},
+        "Expires": {"type": "date"},
+        "Approval": {"type": "select", "options": ["Pending", "Approved", "Rejected"]},
+        "Found at": {"type": "date"},
+        "Idea": {"type": "relation", "db": "idea_bank", "synced": "News candidate"}
+      }
+    },
+    "weekly_plans": {
+      "title": "Weekly Plans",
+      "parent": "content_engine",
+      "properties": {
+        "Week": {"type": "title"},
+        "Engine key": {"type": "rich_text"},
+        "Week start": {"type": "date"},
+        "Status": {"type": "select", "options": ["Draft", "Final"]},
+        "Slots": {"type": "number"},
+        "Filled": {"type": "number"},
+        "Summary": {"type": "rich_text"}
+      }
+    },
+    "content_creators": {
+      "properties": {
+        "Scan error": {"type": "rich_text"},
+        "Baseline posts": {"type": "number"},
+        "YouTube channel ID": {"type": "rich_text"}
+      }
+    },
+    "raw_content": {
+      "properties": {
+        "Status": {"type": "select", "options": ["New", "Processed", "Skipped", "Duplicate", "Needs Input"]},
+        "Discovered via": {"type": "select", "options": ["Manual", "Auto scan", "News"]},
+        "Engine trend score": {"type": "number"},
+        "Rich topic": {"type": "checkbox"},
+        "Rich reason": {"type": "rich_text"},
+        "Topic label": {"type": "rich_text"}
+      }
+    },
+    "idea_bank": {
+      "properties": {
+        "Status": {"type": "select", "options": ["New", "Needs Input", "Shortlisted", "Approved", "Topic Locked", "Scripting", "Scripted", "In Production", "Published", "Archived", "Rejected"]},
+        "Priority": {"type": "select", "options": ["Must-Do", "Time-sensitive", "Normal"]},
+        "Origin": {"type": "select", "options": ["Manual URL", "Creator scan", "News"]},
+        "Engine key": {"type": "rich_text"},
+        "Brand fit reason": {"type": "rich_text"},
+        "Brand fit pass": {"type": "checkbox"},
+        "Transformative angle": {"type": "rich_text"},
+        "Rich topic": {"type": "checkbox"},
+        "Engine trend score": {"type": "rollup", "relation": "Sources", "property": "Engine trend score", "function": "max"},
+        "Engine notes": {"type": "rich_text"},
+        "Prompt versions": {"type": "rich_text"}
+      }
+    },
+    "content_plan": {
+      "properties": {
+        "Status": {"type": "select", "options": ["Planned", "Topic Locked", "Card Ready", "Script Chosen", "Ready to Post", "Posted"]},
+        "Approval": {"type": "select", "options": ["Pending", "Approved", "Postponed", "Rejected"]},
+        "Topic locked": {"type": "checkbox"},
+        "Slot key": {"type": "rich_text"},
+        "Locked at": {"type": "date"},
+        "Added to calendar": {"type": "date"},
+        "Suggested post date": {"type": "date"},
+        "Post date rationale": {"type": "rich_text"},
+        "Original date": {"type": "date"},
+        "Date history": {"type": "rich_text"},
+        "Platforms": {"type": "multi_select", "options": ["Instagram", "TikTok", "YouTube Shorts"]},
+        "Format": {"type": "select", "options": ["Short"]},
+        "Priority": {"type": "select", "options": ["Must-Do", "Time-sensitive", "Normal"]},
+        "Origin": {"type": "select", "options": ["Manual URL", "Creator scan", "News"]},
+        "Brand fit reason": {"type": "rich_text"},
+        "Content card": {"type": "relation", "db": "scripts", "synced": "Plan item"},
+        "Weekly plan": {"type": "relation", "db": "weekly_plans", "synced": "Plan items"}
+      }
+    },
+    "scripts": {
+      "properties": {
+        "Status": {"type": "select", "options": ["Draft", "Card Ready", "Script Chosen", "Needs revision", "Revised", "Approved", "Superseded"]},
+        "Card key": {"type": "rich_text"},
+        "Chosen variation": {"type": "select", "options": ["A", "B"]},
+        "Hook A": {"type": "rich_text"},
+        "Hook B": {"type": "rich_text"},
+        "Angle A": {"type": "rich_text"},
+        "Angle B": {"type": "rich_text"},
+        "Similarity flag A": {"type": "select", "options": ["OK", "Review", "Too close", "Not checked"]},
+        "Similarity flag B": {"type": "select", "options": ["OK", "Review", "Too close", "Not checked"]},
+        "Prompt versions": {"type": "rich_text"}
+      }
+    }
+  },
+  "pages": {
+    "engine_settings": {
+      "heading": "Engine v3 settings",
+      "rows": [
+        ["Cadence", "Mon–Fri, 1 short per day"],
+        ["Brand-fit pass threshold", "7"],
+        ["Post-date offset (days)", "3"],
+        ["Post-date base", "slot_date (slot_date or added_date)"],
+        ["News candidates per day", "5"]
+      ]
+    },
+    "brand_profile": {
+      "sections": [
+        ["Topics to avoid", "⚠️ CREATOR INPUT REQUIRED: list topics the engine must never propose (one per line)."],
+        ["Example good ideas", "⚠️ CREATOR INPUT REQUIRED: 3–5 ideas that are exactly on brand, with one line on why."],
+        ["Example bad ideas", "⚠️ CREATOR INPUT REQUIRED: 3–5 ideas that look relevant but are off brand, with one line on why."]
+      ]
+    }
+  }
+}

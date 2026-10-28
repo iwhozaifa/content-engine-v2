@@ -1,0 +1,39 @@
+{
+  "database": "b0eae5bb-2e26-4339-96c1-2e2b02021ffa",
+  "data_source": "a7c3eea3-1085-4bef-8a92-a45c1271338f",
+  "title": "Weekly Plans",
+  "properties": {
+    "Engine key": {
+      "type": "rich_text"
+    },
+    "Filled": {
+      "type": "number",
+      "format": "number"
+    },
+    "Plan items": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-80d0-9115-000b221bc602",
+      "kind": "dual_property"
+    },
+    "Slots": {
+      "type": "number",
+      "format": "number"
+    },
+    "Status": {
+      "type": "select",
+      "options": [
+        "Draft",
+        "Final"
+      ]
+    },
+    "Summary": {
+      "type": "rich_text"
+    },
+    "Week": {
+      "type": "title"
+    },
+    "Week start": {
+      "type": "date"
+    }
+  }
+}

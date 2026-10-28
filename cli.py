@@ -4,6 +4,7 @@
   .venv/bin/python cli.py ping [--claude]       check Notion access (and the claude CLI)
   .venv/bin/python cli.py settings-check        merged settings and where each value came from
   .venv/bin/python cli.py snapshot-schema       save live Notion schemas to schema/snapshots/
+  .venv/bin/python cli.py migrate-schema        add what schema/target.json needs (additive)
 """
 import argparse
 import importlib
@@ -16,6 +17,7 @@ COMMANDS = {
     "ping": "commands.ping",
     "settings-check": "commands.settings_check",
     "snapshot-schema": "commands.snapshot_schema",
+    "migrate-schema": "commands.migrate_schema",
 }
 
 
@@ -47,6 +49,16 @@ class Context:
             from services.claude import Claude
             self._claude = Claude(self.settings)
         return self._claude
+
+    def execute(self, changes):
+        """Print the ChangeSet, save it to logs/, and apply it when --apply was given."""
+        if self.apply and changes.changes:
+            for e in changes.apply(self.notion, self.ids):
+                self.log.error(e)
+        self.out(changes.render())
+        path = changes.save()
+        self.out(f"  saved {path.relative_to(settings_mod.ROOT) if path.is_relative_to(settings_mod.ROOT) else path}")
+        return changes
 
     def load_notion_settings(self):
         self.settings, self.settings_errors = settings_mod.load_with_notion(self.notion, self.ids)

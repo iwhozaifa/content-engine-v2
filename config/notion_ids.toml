@@ -35,3 +35,15 @@ data_source = "402826bb-cef5-80c7-ba45-000bedac1324"
 [databases.cta_bank]
 database = "402826bb-cef5-80ba-a003-df0c86523492"
 data_source = "402826bb-cef5-80ec-a6e1-000b3fd1c137"
+
+[databases.run_log]
+database = "b19fd30e-d6f0-4ec2-b0c9-2b664f707630"
+data_source = "e93f75a3-e3a8-4245-968b-d4c82bac1466"
+
+[databases.news_candidates]
+database = "f5399a8d-98e7-423d-ae83-0c43c5a4f859"
+data_source = "64c6bc4d-4c71-453a-9300-a35991178c53"
+
+[databases.weekly_plans]
+database = "b0eae5bb-2e26-4339-96c1-2e2b02021ffa"
+data_source = "a7c3eea3-1085-4bef-8a92-a45c1271338f"

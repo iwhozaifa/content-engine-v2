@@ -26,12 +26,12 @@ def now():
 
 
 class RunLog:
-    def __init__(self, command, apply, settings=None, logs=LOGS):
+    def __init__(self, command, apply, settings=None, logs=None):
         self.id = uuid.uuid4().hex[:12]
         self.command = command
         self.mode = "Apply" if apply else "Dry-run"
         self.settings = settings
-        self.logs = Path(logs)
+        self.logs = Path(logs or LOGS)
         self.started = now()
         self.finished = None
         self.counts = {}
@@ -52,7 +52,7 @@ class RunLog:
         self.counts = counts or self.counts
         if claude is not None:
             self.cost_usd, self.tokens = round(claude.cost_usd, 4), claude.tokens
-        changed = sum(v for k, v in self.counts.items() if k in ("create", "update", "schema"))
+        changed = sum(v for k, v in self.counts.items() if k in ("create", "update", "schema", "database", "blocks"))
         self.status = status or ("Failed" if self.errors and not changed
                                  else "Partial" if self.errors else "OK" if changed else "No-op")
         return self.record()

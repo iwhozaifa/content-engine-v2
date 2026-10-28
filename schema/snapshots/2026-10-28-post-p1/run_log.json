@@ -1,0 +1,79 @@
+{
+  "database": "b19fd30e-d6f0-4ec2-b0c9-2b664f707630",
+  "data_source": "e93f75a3-e3a8-4245-968b-d4c82bac1466",
+  "title": "Run Log",
+  "properties": {
+    "Command": {
+      "type": "select",
+      "options": [
+        "ping",
+        "migrate-schema",
+        "add-url",
+        "score",
+        "scan-creators",
+        "news-radar",
+        "weekly-plan",
+        "generate-cards",
+        "generate-card",
+        "reschedule"
+      ]
+    },
+    "Created": {
+      "type": "number",
+      "format": "number"
+    },
+    "Errors": {
+      "type": "rich_text"
+    },
+    "Est. cost (API-equiv $)": {
+      "type": "number",
+      "format": "dollar"
+    },
+    "Finished": {
+      "type": "date"
+    },
+    "Git SHA": {
+      "type": "rich_text"
+    },
+    "Host": {
+      "type": "rich_text"
+    },
+    "Mode": {
+      "type": "select",
+      "options": [
+        "Dry-run",
+        "Apply"
+      ]
+    },
+    "Run": {
+      "type": "title"
+    },
+    "Settings used": {
+      "type": "rich_text"
+    },
+    "Skipped": {
+      "type": "number",
+      "format": "number"
+    },
+    "Started": {
+      "type": "date"
+    },
+    "Status": {
+      "type": "select",
+      "options": [
+        "OK",
+        "Partial",
+        "Failed",
+        "No-op"
+      ]
+    },
+    "Tokens": {
+      "type": "number",
+      "format": "number"
+    },
+    "Updated": {
+      "type": "number",
+      "format": "number"
+    }
+  }
+}

@@ -152,6 +152,9 @@ class Notion:
     def update_page(self, page_id, properties):
         return self.request("PATCH", f"/pages/{page_id}", {"properties": properties})
 
+    def create_database(self, body):
+        return self.request("POST", "/databases", body)
+
     def update_data_source(self, data_source_id, body):
         return self.request("PATCH", f"/data_sources/{data_source_id}", body)
 
@@ -167,7 +170,7 @@ def _json(r):
 
 
 def plain(rich_text):
-    return "".join(t.get("plain_text", "") for t in rich_text or [])
+    return "".join(t.get("plain_text", t.get("text", {}).get("content", "")) for t in rich_text or [])
 
 
 def prop_value(prop):

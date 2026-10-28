@@ -1,0 +1,32 @@
+{
+  "database": "402826bb-cef5-8029-8eda-fa9b2215088a",
+  "data_source": "402826bb-cef5-80c7-ba45-000bedac1324",
+  "title": "Hook Library.csv",
+  "properties": {
+    "Best result": {
+      "type": "rich_text"
+    },
+    "Example": {
+      "type": "rich_text"
+    },
+    "Family": {
+      "type": "rich_text"
+    },
+    "Hook": {
+      "type": "title"
+    },
+    "Notes": {
+      "type": "rich_text"
+    },
+    "Status": {
+      "type": "select",
+      "options": [
+        "Active"
+      ]
+    },
+    "Times used": {
+      "type": "number",
+      "format": "number"
+    }
+  }
+}

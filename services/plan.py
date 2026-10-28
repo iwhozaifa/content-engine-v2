@@ -15,7 +15,7 @@ LOGS = ROOT / "logs"
 
 @dataclass
 class Change:
-    op: str                      # create | update | schema
+    op: str                      # create | update | schema | database | blocks
     db: str                      # key under [databases] in notion_ids.toml
     key: str                     # stable idempotency key
     properties: dict             # Notion API property payload (or schema body for op=schema)
@@ -52,6 +52,18 @@ class ChangeSet:
         self.changes.append(c)
         return c
 
+    def database(self, db, key, body, summary, reason="", after=None):
+        """Create a database (body = POST /databases payload)."""
+        c = Change("database", db, key, body, summary, reason=reason, after=after)
+        self.changes.append(c)
+        return c
+
+    def blocks(self, db, key, page_id, children, summary, reason=""):
+        """Append blocks to a page (db = the page's key under [pages])."""
+        c = Change("blocks", db, key, {}, summary, page_id=page_id, children=children, reason=reason)
+        self.changes.append(c)
+        return c
+
     def skip(self, key, reason):
         self.skipped.append((key, reason))
 
@@ -61,7 +73,7 @@ class ChangeSet:
     def counts(self):
         out = {"create": 0, "update": 0, "schema": 0, "skip": len(self.skipped)}
         for c in self.changes:
-            out[c.op] += 1
+            out[c.op] = out.get(c.op, 0) + 1
         for c in self.changes:
             if c.status in ("conflict", "failed"):
                 out[c.status] = out.get(c.status, 0) + 1
@@ -87,8 +99,8 @@ class ChangeSet:
                 "changes": [{k: v for k, v in asdict(c).items() if k != "after"} for c in self.changes],
                 "skipped": self.skipped}
 
-    def save(self, logs=LOGS):
-        logs = Path(logs)
+    def save(self, logs=None):
+        logs = Path(logs or LOGS)
         logs.mkdir(parents=True, exist_ok=True)
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         path = logs / f"changeset-{self.command}-{stamp}.json"
@@ -117,6 +129,10 @@ class ChangeSet:
                     c.result_id = c.page_id
                 elif c.op == "schema":
                     notion.update_data_source(db["data_source"], c.properties)
+                elif c.op == "database":
+                    c.result_id = notion.create_database(c.properties)["id"]
+                elif c.op == "blocks":
+                    notion.append_children(c.page_id, c.children)
                 c.status = "done"
                 if c.after:
                     c.after(c)

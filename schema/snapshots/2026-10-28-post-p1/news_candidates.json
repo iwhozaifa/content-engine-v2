@@ -1,0 +1,72 @@
+{
+  "database": "f5399a8d-98e7-423d-ae83-0c43c5a4f859",
+  "data_source": "64c6bc4d-4c71-453a-9300-a35991178c53",
+  "title": "News Candidates",
+  "properties": {
+    "Approval": {
+      "type": "select",
+      "options": [
+        "Pending",
+        "Approved",
+        "Rejected"
+      ]
+    },
+    "Brand fit": {
+      "type": "number",
+      "format": "number"
+    },
+    "Brand fit reason": {
+      "type": "rich_text"
+    },
+    "Engine key": {
+      "type": "rich_text"
+    },
+    "Expires": {
+      "type": "date"
+    },
+    "Found at": {
+      "type": "date"
+    },
+    "Headline": {
+      "type": "title"
+    },
+    "Idea": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-809b-8886-000b9d3c4873",
+      "kind": "dual_property"
+    },
+    "Pillar": {
+      "type": "rich_text"
+    },
+    "Published": {
+      "type": "date"
+    },
+    "Source": {
+      "type": "select",
+      "options": []
+    },
+    "Source URL": {
+      "type": "url"
+    },
+    "Suggested angle": {
+      "type": "rich_text"
+    },
+    "Summary": {
+      "type": "rich_text"
+    },
+    "Time-sensitive": {
+      "type": "checkbox"
+    },
+    "Urgency": {
+      "type": "select",
+      "options": [
+        "High",
+        "Medium",
+        "Low"
+      ]
+    },
+    "Why it matters": {
+      "type": "rich_text"
+    }
+  }
+}

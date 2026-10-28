@@ -6,7 +6,7 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 |---|---|---|---|
 | Baseline | main | Done | v0.1.0 |
 | P0 Foundation | feature/p0-foundation | Merged | v0.2.0 |
-| P1 Notion schema | feature/p1-notion-schema | Not started | |
+| P1 Notion schema | feature/p1-notion-schema | Merged | v0.3.0 |
 | P2 Must-Do + brand fit | feature/p2-mustdo-brandfit | Not started | |
 | P3 Creator scan | feature/p3-creator-scan | Not started | |
 | P4 Weekly plan + topic locking | feature/p4-weekly-plan | Not started | |
@@ -19,6 +19,9 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 | Item | Needed for | Status |
 |---|---|---|
 | YouTube login in Firefox (or `ENGINE_COOKIES_FILE`) | `tools/fetch.py` on this machine: YouTube currently answers "Sign in to confirm you're not a bot" (same before and after the reorg) | open |
+| Rename `Hook Library.csv` → `Hook Library`, `CTA Bank.csv` → `CTA Bank` (Notion renames need your OK; the engine uses IDs so nothing depends on it) | Tidiness | open |
+| Add the views listed by `cli.py migrate-schema --views` (API can't create views) | Notion UI | open |
+| Fill the 3 new Brand Profile sections on the DNA page (Topics to avoid, Example good/bad ideas) | Better brand-fit scoring | open |
 
 ## Decisions (2026-10-28)
 - Standing OK: each phase merges once tests are green, the live dry-run is clean and the diff summary is below. Additive Notion schema changes and `[engine-test]` rows are applied without asking. Notion renames/deletes wait for you.
@@ -34,3 +37,9 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 - Reorg: files sorted into `tools/`, `docs/`, `scripts/`; all paths updated; 48 tests pass; `ping` OK.
 - Diff (P0 → main): 11 commits, CLI + services + config + docs + tests; existing files only moved or path-updated.
 - Note: `claude` isn't on PATH in WSL; the runner falls back to the VS Code extension's bundled binary. On a server, install Claude Code and set CLAUDE_CODE_OAUTH_TOKEN.
+
+## P1 log
+- `schema/target.json` + `migrate-schema` (additive only; type conflicts reported, never changed).
+- Applied 2026-10-28: created Run Log, News Candidates, Weekly Plans; 12 property/option changes; Engine Settings "Engine v3 settings" table (4 rows); 3 Brand Profile sections.
+- Re-run with `--apply` → "nothing to change". Snapshots: `schema/snapshots/2026-10-28-pre-p1` → `-post-p1`. Run Log rows now written to Notion on `--apply`.
+- Existing rows/formulas untouched; `/add-url` flow uses only pre-existing properties, so it is unaffected.
