@@ -4,6 +4,12 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com), ver
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-28 (P4 weekly plan)
+
+### Added
+- `weekly-plan`: slot maths from cadence, fill order Must-Do → approved news → creator ideas, topic locking, Suggested post date (slot date + offset, configurable base), Weekly Plans page, idempotent re-runs, Must-Do overflow reporting.
+- `services/slots.py`.
+
 ## [0.5.0] - 2026-10-28 (P3 creator scan)
 
 ### Added

@@ -8,6 +8,7 @@
   .venv/bin/python cli.py add-url <url> [--must-do]   links -> Raw Content + Idea Bank (brand fit, dedupe)
   .venv/bin/python cli.py score                 (re)score ideas: brand fit, pass/fail, fit score
   .venv/bin/python cli.py scan-creators         Active creators -> baselines, trend scores, rich topics
+  .venv/bin/python cli.py weekly-plan           fill next week's slots, lock topics, Weekly Plans page
 """
 import argparse
 import importlib
@@ -24,6 +25,7 @@ COMMANDS = {
     "add-url": "commands.add_url",
     "score": "commands.score",
     "scan-creators": "commands.scan_creators",
+    "weekly-plan": "commands.weekly_plan",
 }
 
 

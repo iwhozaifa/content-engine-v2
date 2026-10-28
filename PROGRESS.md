@@ -9,7 +9,7 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 | P1 Notion schema | feature/p1-notion-schema | Merged | v0.3.0 |
 | P2 Must-Do + brand fit | feature/p2-mustdo-brandfit | Merged | v0.4.0 |
 | P3 Creator scan | feature/p3-creator-scan | Merged | v0.5.0 |
-| P4 Weekly plan + topic locking | feature/p4-weekly-plan | Not started | |
+| P4 Weekly plan + topic locking | feature/p4-weekly-plan | Merged | v0.6.0 |
 | P5 Content cards | feature/p5-content-cards | Not started | |
 | P6 News radar | feature/p6-news-radar | Not started | |
 | P7 Approval + reschedule | feature/p7-reschedule | Not started | |
@@ -61,3 +61,9 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 - Baseline = median of last N posts, unless Lock baseline. Failures go to the creator's `Scan error`.
 - Live 2026-10-28 (dry-run, `--state Suggested`, Jack Roberts via yt-dlp): baseline 12,505 views over 10 posts; 4 candidates judged (1 rich); the post already in Raw Content was updated, not duplicated.
 - Pending: done test with 3 Active creators (1 per platform) needs your creator choice; Instagram listing needs Firefox login or cookies.
+
+## P4 log
+- `weekly-plan`: next week's slots from the cadence (Engine Settings "Cadence"), fill order Must-Do → approved news → Shortlisted/Approved creator ideas that pass brand fit (Approved first, then Review rank / Fit score). One idea per cluster per week (Must-Do exempt). Must-Do never bumps a taken slot; overflow is reported and waits.
+- Each placement: Content Plan row (Slot key, Status Topic Locked, Topic locked ✓, Locked at, Approval Pending, Added to calendar, Suggested post date = slot date + offset, rationale), Idea → Topic Locked, Weekly Plans page (`week:<ISO week>`) with the slot list. No scripts.
+- Legacy rows without a Slot key still occupy their day. Re-run → no-op.
+- Live 2026-10-28 on test week 2027-W01 with 8 `[engine-test]` ideas: order Must-Do, Must-Do, News, Creator 0, Creator 1; brand-fit fail skipped; post dates slot+3; re-run No-op. Test rows kept for the P5/P7 live tests, then archived.

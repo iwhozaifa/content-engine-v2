@@ -36,6 +36,7 @@ Slash commands: /migrate (phase 0, once) · /add-url · /score · /research · /
 | `add-url <url…> [--must-do] [--transcript-file f] [--from-notion]` | P2 | Raw Content, Idea Bank, Content Creators (Suggested) |
 | `score [titles…] [--rescore]` | P2 | Idea Bank brand fit + fit score |
 | `scan-creators [--creator x] [--state Active]` | P3 | Creator baselines, Raw Content (trend candidates; rich topics queued as Status New) |
+| `weekly-plan [--week YYYY-MM-DD]` | P4 | Content Plan slots (Topic Locked, Approval Pending, Suggested post date), Idea Status, Weekly Plans page |
 
 Layout: `commands/` (one module per CLI command), `services/` (notion, claude, settings, plan, runlog, retry), `prompts/` (`<name>.v<N>.md` + `.schema.json`, never inline prompt strings), `config/` (`settings.toml` defaults, `notion_ids.toml`), `schema/` (Notion schema snapshots), `tests/`.
 
