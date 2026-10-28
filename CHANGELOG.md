@@ -4,6 +4,15 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com), ver
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-28 (P7 approval + reschedule)
+
+### Added
+- `reschedule`: Postponed → next open slot with Original date and Date history, card kept, Approval back to Pending; Rejected → slot released; Approved + Script Chosen → Ready to Post.
+- `/reschedule` slash command.
+
+### Changed
+- `weekly-plan` ignores Rejected rows when counting taken slots (shared `week_openings`).
+
 ## [0.8.0] - 2026-10-28 (P6 news radar)
 
 ### Added

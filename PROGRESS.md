@@ -12,7 +12,7 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 | P4 Weekly plan + topic locking | feature/p4-weekly-plan | Merged | v0.6.0 |
 | P5 Content cards | feature/p5-content-cards | Merged | v0.7.0 |
 | P6 News radar | feature/p6-news-radar | Merged | v0.8.0 |
-| P7 Approval + reschedule | feature/p7-reschedule | Not started | |
+| P7 Approval + reschedule | feature/p7-reschedule | Merged | v0.9.0 |
 | P8 Scheduling, notifications, hardening | feature/p8-scheduling-hardening | Not started | |
 
 ## Waiting on you
@@ -82,3 +82,8 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 - Approved candidates without an idea → Raw Content row (Discovered via News, provenance) + Idea (Origin News, Status Approved, Priority Time-sensitive when flagged, brand fit pass from the threshold, News candidate relation). Rejected never become ideas.
 - Live 2026-10-28: 2,417 feed items → 40 new → 5 real candidates written (Pending) across two runs (cap 5/day respected, no duplicates). Test approval → idea + raw created; re-run No-op.
 - `/news` slash command wraps the CLI.
+
+## P7 log
+- `reschedule`: Postponed → first open slot in a later week (up to 8 weeks ahead; several postponed items get different slots), Original date set once, Date history appended, Suggested post date recomputed, Weekly plan relinked, card kept, Approval → Pending. Rejected → Topic locked off, Slot key cleared (weekly-plan no longer counts Rejected rows), idea → Rejected with reason. Approved + Script Chosen → Ready to Post; Approved without a choice waits.
+- Live 2026-10-28 on the test week: postponed slot 2027-01-05 → Mon 2027-01-11 (post 2027-01-14); approved slot with a chosen card → Ready to Post; re-run No-op.
+- `/reschedule` slash command wraps the CLI.

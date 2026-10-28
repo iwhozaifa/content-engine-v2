@@ -24,25 +24,8 @@ def run(ctx):
     start = date.fromisoformat(ctx.args.week) if ctx.args.week else slots.next_week_start(added)
     if start.weekday() != 0:
         raise ValueError(f"--week must be a Monday, got {start} ({DAYS[start.weekday()]})")
-    all_slots = slots.week_slots(start, s["cadence"])
+    all_slots, open_slots = week_openings(ctx, ds, start)
     end = start + timedelta(days=6)
-
-    # Occupied slots: rows with a Slot key, and legacy rows counted per day.
-    flt = {"and": [{"property": "Date", "date": {"on_or_after": start.isoformat()}},
-                   {"property": "Date", "date": {"on_or_before": end.isoformat()}}]}
-    existing = [P.values(p) for p in ctx.notion.query(ds["content_plan"], filter=flt)]
-    taken = {v["Slot key"] for v in existing if v.get("Slot key")}
-    legacy_per_day = {}
-    for v in existing:
-        if not v.get("Slot key") and v.get("Date"):
-            legacy_per_day[v["Date"][:10]] = legacy_per_day.get(v["Date"][:10], 0) + 1
-    open_slots = []
-    for key, d, n in all_slots:
-        if key in taken:
-            continue
-        if legacy_per_day.get(d.isoformat(), 0) >= n:
-            continue
-        open_slots.append((key, d, n))
 
     pool, waiting = build_pool(ctx, ds)
     placements = []
@@ -118,6 +101,25 @@ def run(ctx):
     for d, n, idea, bucket, post in rows:
         ctx.out(f"  {DAYS[d.weekday()]} {d} #{n}  [{bucket:<8}] {idea.get('Idea')} · post {post}")
     return cs
+
+
+def week_openings(ctx, ds, start):
+    """(all slots, open slots) for the week starting `start`. A slot is taken by a row with its Slot key;
+    rows without one (made by hand or by the old /plan-week) take one slot on their day. Rejected rows don't count."""
+    all_slots = slots.week_slots(start, ctx.settings["cadence"])
+    end = start + timedelta(days=6)
+    flt = {"and": [{"property": "Date", "date": {"on_or_after": start.isoformat()}},
+                   {"property": "Date", "date": {"on_or_before": end.isoformat()}}]}
+    existing = [v for v in (P.values(p) for p in ctx.notion.query(ds["content_plan"], filter=flt))
+                if v.get("Approval") != "Rejected"]
+    taken = {v["Slot key"] for v in existing if v.get("Slot key")}
+    legacy_per_day = {}
+    for v in existing:
+        if not v.get("Slot key") and v.get("Date"):
+            legacy_per_day[v["Date"][:10]] = legacy_per_day.get(v["Date"][:10], 0) + 1
+    open_slots = [(key, d, n) for key, d, n in all_slots
+                  if key not in taken and legacy_per_day.get(d.isoformat(), 0) < n]
+    return all_slots, open_slots
 
 
 def build_pool(ctx, ds):

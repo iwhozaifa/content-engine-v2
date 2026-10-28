@@ -12,6 +12,7 @@
   .venv/bin/python cli.py generate-cards --locked   A/B content cards for locked topics (+ revisions, choices)
   .venv/bin/python cli.py settings-set <row> <value>  change one Engine Settings value
   .venv/bin/python cli.py news-radar            RSS -> News Candidates (Pending); Approved -> ideas
+  .venv/bin/python cli.py reschedule            Postponed -> next open slot; Rejected -> slot freed; Approved -> Ready to Post
 """
 import argparse
 import importlib
@@ -33,6 +34,7 @@ COMMANDS = {
     "generate-cards": "commands.generate_cards",
     "settings-set": "commands.settings_set",
     "news-radar": "commands.news_radar",
+    "reschedule": "commands.reschedule",
 }
 
 
