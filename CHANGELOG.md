@@ -4,6 +4,16 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com), ver
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-28 (P3 creator scan)
+
+### Added
+- `scan-creators`: baselines (median of last N, respects Lock baseline), Engine trend score from configurable weights/caps/thresholds, rich topics via `trend_judge.v1`, recurrence across creators, Scan error on failure.
+- `services/trend.py`, `services/sources.py` (YouTube Data API or yt-dlp; Instagram/TikTok via yt-dlp).
+- `add-url --from-notion` turns scanned rich topics into ideas (Origin = Creator scan, Rich topic ticked).
+
+### Changed
+- A failed fetch for a non-Must-Do link creates the Raw Content row only (Needs Input), as the original /add-url did; Must-Do links also get a Needs Input idea.
+
 ## [0.4.0] - 2026-10-28 (P2 Must-Do URLs + brand fit)
 
 ### Added

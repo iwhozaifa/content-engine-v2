@@ -35,6 +35,7 @@ Slash commands: /migrate (phase 0, once) · /add-url · /score · /research · /
 | `migrate-schema [--apply] [--views]` | P1 | schema only, additive (`schema/target.json`) |
 | `add-url <url…> [--must-do] [--transcript-file f] [--from-notion]` | P2 | Raw Content, Idea Bank, Content Creators (Suggested) |
 | `score [titles…] [--rescore]` | P2 | Idea Bank brand fit + fit score |
+| `scan-creators [--creator x] [--state Active]` | P3 | Creator baselines, Raw Content (trend candidates; rich topics queued as Status New) |
 
 Layout: `commands/` (one module per CLI command), `services/` (notion, claude, settings, plan, runlog, retry), `prompts/` (`<name>.v<N>.md` + `.schema.json`, never inline prompt strings), `config/` (`settings.toml` defaults, `notion_ids.toml`), `schema/` (Notion schema snapshots), `tests/`.
 

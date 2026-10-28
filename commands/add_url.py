@@ -11,6 +11,7 @@ from tools.engine import canon
 WRITES = True
 MAX_WORDS = 12000
 DONE = ("Processed", "Duplicate", "Skipped")
+ORIGINS = {"Auto scan": "Creator scan", "News": "News", "Manual": "Manual URL"}
 
 
 def add_arguments(p):
@@ -125,6 +126,8 @@ class Run:
             rec.update(transcript=pasted, transcript_source="Pasted")
             if rec.get("fetch_status") not in ("OK", "Partial"):
                 rec["fetch_status"] = "Partial"
+        origin = ORIGINS.get(P.values(raw).get("Discovered via") if raw is not None else None, "Manual URL")
+        rich = bool(raw is not None and P.values(raw).get("Rich topic"))
         idea_key = f"url:{key}"
         existing_idea = self.find("idea_bank", "Engine key", "rich_text", idea_key)
 
@@ -163,7 +166,8 @@ class Run:
         raw_id = self.resolver(raw_change, raw)
         idea_props = {
             "Idea": P.title(x["idea_title"]), "Status": P.select(status), "Priority": P.select(priority),
-            "Origin": P.select("Manual URL"), "Engine key": P.text(idea_key), "Pillar": P.text(x["pillar"]),
+            "Origin": P.select(origin), "Engine key": P.text(idea_key), "Pillar": P.text(x["pillar"]),
+            "Rich topic": P.checkbox(rich),
             "Content job": P.text(x["content_job"]), "Topic tags": P.multi(x["topic_tags"]),
             "Cluster": P.text(x["cluster"]), "Why it works": P.text(x["why_it_works"]),
             "Suggested hook": P.text(x["suggested_hook"]), "Differentiation note": P.text(x["differentiation_note"]),
@@ -214,7 +218,7 @@ class Run:
         raw_change = self.write_raw(key, rec, raw, priority, "Needs Input")
         raw_id = self.resolver(raw_change, raw)
         hint = rec.get("hint") or "Fetch failed. Paste the transcript into the Raw Content Transcript field."
-        if existing_idea is None:
+        if existing_idea is None and priority == "Must-Do":
             props = {"Idea": P.title(f"[Needs Input] {rec.get('title') or url}"[:200]), "Status": P.select("Needs Input"),
                      "Priority": P.select(priority), "Origin": P.select("Manual URL"), "Engine key": P.text(idea_key),
                      "Engine notes": P.text(f"{rec.get('fetch_status')}: {hint} Then run `cli.py add-url --from-notion --apply`.")}

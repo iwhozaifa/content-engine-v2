@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["posts"],
+  "properties": {
+    "posts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["n", "rich_topic", "rich_reason", "topic_label", "evergreen", "substance"],
+        "properties": {
+          "n": {"type": "integer"},
+          "rich_topic": {"type": "boolean"},
+          "rich_reason": {"type": "string"},
+          "topic_label": {"type": "string"},
+          "evergreen": {"type": "boolean"},
+          "substance": {"type": "number", "minimum": 0, "maximum": 10}
+        }
+      }
+    }
+  }
+}

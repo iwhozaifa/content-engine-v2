@@ -7,6 +7,7 @@
   .venv/bin/python cli.py migrate-schema        add what schema/target.json needs (additive)
   .venv/bin/python cli.py add-url <url> [--must-do]   links -> Raw Content + Idea Bank (brand fit, dedupe)
   .venv/bin/python cli.py score                 (re)score ideas: brand fit, pass/fail, fit score
+  .venv/bin/python cli.py scan-creators         Active creators -> baselines, trend scores, rich topics
 """
 import argparse
 import importlib
@@ -22,6 +23,7 @@ COMMANDS = {
     "migrate-schema": "commands.migrate_schema",
     "add-url": "commands.add_url",
     "score": "commands.score",
+    "scan-creators": "commands.scan_creators",
 }
 
 

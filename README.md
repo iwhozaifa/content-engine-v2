@@ -44,6 +44,7 @@ git config core.hooksPath scripts/hooks    # secret scan + tests before each com
 | Schema migration | `cli.py migrate-schema [--views]` | additive schema changes |
 | Add links | `cli.py add-url <url…> [--must-do]` or `--from-notion` | Raw Content + Idea Bank |
 | Brand fit | `cli.py score` | Idea Bank scores |
+| Creator scan | `cli.py scan-creators`, then `cli.py add-url --from-notion` turns rich topics into ideas | Creators, Raw Content |
 
 Every command is a **dry-run unless you add `--apply`**. A dry-run prints what would change and saves it to `logs/changeset-*.json`. Re-running a command never duplicates rows. Each run is logged to `logs/runs.jsonl` (and to the Notion Run Log with `--apply`).
 

@@ -8,7 +8,7 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 | P0 Foundation | feature/p0-foundation | Merged | v0.2.0 |
 | P1 Notion schema | feature/p1-notion-schema | Merged | v0.3.0 |
 | P2 Must-Do + brand fit | feature/p2-mustdo-brandfit | Merged | v0.4.0 |
-| P3 Creator scan | feature/p3-creator-scan | Not started | |
+| P3 Creator scan | feature/p3-creator-scan | Merged | v0.5.0 |
 | P4 Weekly plan + topic locking | feature/p4-weekly-plan | Not started | |
 | P5 Content cards | feature/p5-content-cards | Not started | |
 | P6 News radar | feature/p6-news-radar | Not started | |
@@ -20,6 +20,8 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 |---|---|---|
 | YouTube login in Firefox (or `ENGINE_COOKIES_FILE`) | `tools/fetch.py` on this machine: YouTube currently answers "Sign in to confirm you're not a bot" (same before and after the reorg) | open |
 | Rename `Hook Library.csv` → `Hook Library`, `CTA Bank.csv` → `CTA Bank` (Notion renames need your OK; the engine uses IDs so nothing depends on it) | Tidiness | open |
+| Set State = Active on the creators to scan (only Jack Roberts exists, State = Suggested), ideally 1 YouTube + 1 Instagram + 1 TikTok | P3 done test with real creators | open |
+| `YOUTUBE_API_KEY` in `.env` (free, Google Cloud console → YouTube Data API v3) | Faster, more reliable YouTube scans (yt-dlp fallback works without it) | open |
 | Add the views listed by `cli.py migrate-schema --views` (API can't create views) | Notion UI | open |
 | Fill the 3 new Brand Profile sections on the DNA page (Topics to avoid, Example good/bad ideas) | Better brand-fit scoring | open |
 
@@ -52,3 +54,10 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 - Live test 2026-10-28: article → Shortlisted (fit 7.5, brand 8 ✓); dead link → Needs Input; pasted transcript → Shortlisted; re-runs → skip only. Test rows archived; one test merge into your real idea was reverted.
 - `/add-url` and `/score` are now thin wrappers over the CLI. Raw Content gained a `Priority` property (migrate-schema).
 - Not run on your real ideas yet: `cli.py score --apply` will add brand fit to the 1 open legacy idea.
+
+## P3 log
+- `services/trend.py` mirrors the Raw Content formulas with weights/caps/thresholds from settings; `services/sources.py` lists posts (YouTube Data API when `YOUTUBE_API_KEY` is set, else yt-dlp; Instagram/TikTok via yt-dlp). `trend_judge.v1` (Haiku) labels rich topics; recurrence = creators per topic label in the lookback window.
+- Only trend candidates are stored in Raw Content. Rich topics get Status New (the idea queue for `add-url --from-notion`, Origin = Creator scan); others Status Skipped. Existing rows only get metrics/trend updated.
+- Baseline = median of last N posts, unless Lock baseline. Failures go to the creator's `Scan error`.
+- Live 2026-10-28 (dry-run, `--state Suggested`, Jack Roberts via yt-dlp): baseline 12,505 views over 10 posts; 4 candidates judged (1 rich); the post already in Raw Content was updated, not duplicated.
+- Pending: done test with 3 Active creators (1 per platform) needs your creator choice; Instagram listing needs Firefox login or cookies.

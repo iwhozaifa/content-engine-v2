@@ -166,7 +166,7 @@ def test_needs_input_placeholder_is_archived_when_merged(tmp_path, monkeypatch, 
     n = FakeNotion()
     old = n.add("ds-idea_bank", {"Idea": {"title": [{"text": {"content": "Existing"}}]},
                                   "Status": {"select": {"name": "Shortlisted"}}})
-    run_cli(["add-url", URL, "--apply"], monkeypatch, tmp_path, n, runner=FakeClaude())
+    run_cli(["add-url", URL, "--must-do", "--apply"], monkeypatch, tmp_path, n, runner=FakeClaude())
     [raw] = raws(n)
     raw["properties"]["Transcript"] = {"type": "rich_text", "rich_text": [{"plain_text": "same topic " * 30}]}
     code, out, _ = run_cli(["add-url", "--from-notion", "--apply"], monkeypatch, tmp_path, n,
@@ -175,3 +175,9 @@ def test_needs_input_placeholder_is_archived_when_merged(tmp_path, monkeypatch, 
     placeholder = [p for p in ideas(n) if p["id"] != old["id"]][0]
     assert v(placeholder)["Status"] == "Archived" and v(placeholder)["Duplicate of"] == [old["id"]]
     assert v(old)["Sources"] == [raw["id"]]
+
+
+def test_failed_normal_link_gets_raw_row_only(tmp_path, monkeypatch, fetched):
+    n = FakeNotion()
+    code, out, _ = run_cli(["add-url", URL, "--apply"], monkeypatch, tmp_path, n, runner=FakeClaude())
+    assert code == 0 and not ideas(n) and v(raws(n)[0])["Status"] == "Needs Input"
