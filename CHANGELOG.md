@@ -4,6 +4,17 @@ All notable changes. Format: [Keep a Changelog](https://keepachangelog.com), ver
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-10-28 (P8 scheduling, notifications, hardening)
+
+### Added
+- `scheduling/`: jobs table, `run.sh` (locking, log rotation), `install.sh` for systemd, launchd and cron (dry-run by default), Windows Task Scheduler script, optional GitHub Actions workflow.
+- Notifications via Telegram or email (`services/notify.py`, Engine Settings "Notifications", `notify-test`).
+- `docs/operations.md`; README "Your week in Notion".
+
+### Changed
+- `scripts/setup.sh` supports macOS and Linux.
+- Clearer error when a database ID is missing.
+
 ## [0.9.0] - 2026-10-28 (P7 approval + reschedule)
 
 ### Added

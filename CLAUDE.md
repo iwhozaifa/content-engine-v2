@@ -41,6 +41,9 @@ Slash commands: /migrate (phase 0, once) · /add-url · /score · /plan-week · 
 | `settings-set <row> <value>` | P5 | one Engine Settings cell |
 | `news-radar [--no-fetch]` | P6 | News Candidates (Pending); Approved → Raw Content + Idea (Origin News) |
 | `reschedule` | P7 | Content Plan: Postponed → next open slot; Rejected → slot released; Approved + Script Chosen → Ready to Post |
+| `notify-test` | P8 | never (sends a test notification with `--apply`) |
+
+Schedules: `scheduling/jobs.txt` + `scheduling/install.sh` (see docs/operations.md).
 
 Layout: `commands/` (one module per CLI command), `services/` (notion, claude, settings, plan, runlog, retry), `prompts/` (`<name>.v<N>.md` + `.schema.json`, never inline prompt strings), `config/` (`settings.toml` defaults, `notion_ids.toml`), `schema/` (Notion schema snapshots), `tests/`.
 

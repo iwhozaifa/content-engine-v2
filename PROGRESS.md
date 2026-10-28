@@ -13,7 +13,7 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 | P5 Content cards | feature/p5-content-cards | Merged | v0.7.0 |
 | P6 News radar | feature/p6-news-radar | Merged | v0.8.0 |
 | P7 Approval + reschedule | feature/p7-reschedule | Merged | v0.9.0 |
-| P8 Scheduling, notifications, hardening | feature/p8-scheduling-hardening | Not started | |
+| P8 Scheduling, notifications, hardening | feature/p8-scheduling-hardening | Merged | v0.10.0 |
 
 ## Waiting on you
 | Item | Needed for | Status |
@@ -23,6 +23,9 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 | Set State = Active on the creators to scan (only Jack Roberts exists, State = Suggested), ideally 1 YouTube + 1 Instagram + 1 TikTok | P3 done test with real creators | open |
 | `YOUTUBE_API_KEY` in `.env` (free, Google Cloud console → YouTube Data API v3) | Faster, more reliable YouTube scans (yt-dlp fallback works without it) | open |
 | Review the 5 real News Candidates found 2026-10-28 (Approval = Pending) | Daily news flow | open |
+| Pick the production machine (Mac or Linux server), run `scripts/setup.sh`, then `scheduling/install.sh --apply` (docs/operations.md). Nothing is scheduled on this dev box yet | Daily automation | open |
+| Optional: Telegram bot token + chat id, then `settings-set "Notifications" On --apply` | Run notifications | open |
+| Run `cli.py score --apply` once to add brand fit to your 1 open legacy idea (without brand-fit pass, ideas can't fill slots) | Weekly plan pool | open |
 | Add the views listed by `cli.py migrate-schema --views` (API can't create views) | Notion UI | open |
 | Fill the 3 new Brand Profile sections on the DNA page (Topics to avoid, Example good/bad ideas) | Better brand-fit scoring | open |
 
@@ -87,3 +90,13 @@ Plan: phases P0–P8 (see CLAUDE.md for the workflow). Update this file at the e
 - `reschedule`: Postponed → first open slot in a later week (up to 8 weeks ahead; several postponed items get different slots), Original date set once, Date history appended, Suggested post date recomputed, Weekly plan relinked, card kept, Approval → Pending. Rejected → Topic locked off, Slot key cleared (weekly-plan no longer counts Rejected rows), idea → Rejected with reason. Approved + Script Chosen → Ready to Post; Approved without a choice waits.
 - Live 2026-10-28 on the test week: postponed slot 2027-01-05 → Mon 2027-01-11 (post 2027-01-14); approved slot with a chosen card → Ready to Post; re-run No-op.
 - `/reschedule` slash command wraps the CLI.
+
+## P8 log
+- `scheduling/`: `jobs.txt` (6 jobs), `run.sh` (lock per command, log rotation, changeset pruning, PATH for cron/systemd), `install.sh` (systemd user timers / launchd / cron; prints by default, `--apply` installs, `--dry-run-commands` rehearsal, `--remove`), `windows/register-tasks.ps1` (Task Scheduler → wsl.exe), `.github/workflows/scheduled.yml` (opt-in via `ENGINE_ACTIONS=on`).
+- Notifications: `services/notify.py` (Telegram or SMTP, free), sent after `--apply` runs that changed something or failed, with a link to the Notion database to act on. Engine Settings row "Notifications" (Off) added; `notify-test`.
+- `scripts/setup.sh` now supports macOS (Homebrew) and Ubuntu/Debian, installs requirements, sets the git hook, creates `.env`.
+- Error hint for missing database IDs; `docs/operations.md` (server install, schedules, notifications, costs, troubleshooting); README "Your week in Notion".
+- Live 2026-10-28: a systemd user timer fired `scheduling/run.sh ping` and `ping --claude` on this box (Notion + Claude OK from the scheduler environment). All `[engine-test]` rows (18) archived. Final dry-run sweep of every command against live Notion: clean.
+
+## Final state (2026-10-28)
+All phases P0–P8 merged; 88 tests. Commands: ping, settings-check, snapshot-schema, migrate-schema, add-url, score, scan-creators, weekly-plan, generate-card(s), settings-set, news-radar, reschedule, notify-test. Slash commands /add-url, /score, /plan-week, /cards, /news, /reschedule wrap the CLI.

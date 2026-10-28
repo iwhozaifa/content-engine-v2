@@ -13,6 +13,7 @@
   .venv/bin/python cli.py settings-set <row> <value>  change one Engine Settings value
   .venv/bin/python cli.py news-radar            RSS -> News Candidates (Pending); Approved -> ideas
   .venv/bin/python cli.py reschedule            Postponed -> next open slot; Rejected -> slot freed; Approved -> Ready to Post
+  .venv/bin/python cli.py notify-test           send a test notification (Telegram or email)
 """
 import argparse
 import importlib
@@ -35,6 +36,7 @@ COMMANDS = {
     "settings-set": "commands.settings_set",
     "news-radar": "commands.news_radar",
     "reschedule": "commands.reschedule",
+    "notify-test": "commands.notify_test",
 }
 
 
@@ -108,7 +110,7 @@ def main(argv=None, out=print):
         ctx.log.error("interrupted")
         changes, code = None, 130
     except Exception as e:  # noqa: BLE001 - every failure lands in the run log with a clear message
-        ctx.log.error(f"{type(e).__name__}: {e}")
+        ctx.log.error(f"{type(e).__name__}: {e}{hint(e, ctx)}")
         changes, code = None, 1
     for w in ctx.settings_errors:
         ctx.log.warn(w)
@@ -120,10 +122,28 @@ def main(argv=None, out=print):
             ctx.log.write_notion(ctx.notion, ctx.ids)
         except Exception as e:  # noqa: BLE001
             out(f"  ! Run Log row not written: {e}")
+    if ctx.apply:
+        notify_run(ctx, out)
     out(ctx.log.summary())
     if ctx.log.errors and code == 0:
         code = 2
     return code
+
+
+def hint(e, ctx):
+    """Turn the common setup mistakes into a next step."""
+    if isinstance(e, KeyError) and e.args and e.args[0] not in ctx.ids.get("databases", {}):
+        return " (not in config/notion_ids.toml: run `cli.py migrate-schema --apply` to create it, or `cli.py ping`)"
+    return ""
+
+
+def notify_run(ctx, out):
+    from services import notify
+    try:
+        if notify.should_send(ctx.settings, ctx.log):
+            notify.send(ctx.settings, notify.message(ctx.log, ctx.ids))
+    except Exception as e:  # noqa: BLE001 - a failed notification never fails the run
+        out(f"  ! notification not sent: {e}")
 
 
 if __name__ == "__main__":

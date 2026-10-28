@@ -6,6 +6,20 @@ Notion is the UI and the approval surface. Claude does the work. This repo holds
 - **Rules every run follows:** [CLAUDE.md](CLAUDE.md).
 - **Where the build is:** [PROGRESS.md](PROGRESS.md) · [CHANGELOG.md](CHANGELOG.md).
 
+## Your week in Notion
+
+| When | The engine (scheduled) | You (in Notion) |
+|---|---|---|
+| Any time | | Paste a must-do link: `/add-url must-do <url>`, or add a Raw Content row (Status New, Priority Must-Do) |
+| Daily 08:00 | News radar → **News Candidates** (Pending) | Set Approval = Approved on the ones worth covering |
+| Daily 09:00 | Your Raw Content rows, pasted transcripts and scanned rich topics → **Idea Bank** with brand fit | Shortlist / approve ideas; paste transcripts for Needs Input |
+| Thursday | Creator scan → trend scores, rich topics | Set State = Active on creators to follow |
+| Friday 17:00 | **Weekly plan**: Must-Do → approved news → best creator ideas; topics locked | Review the Weekly Plans page; set Approval per slot (Approved / Postponed / Rejected) |
+| Daily 09:30 | **Content cards** (A/B, captions, thumbnails) for locked topics | Pick A or B (Chosen variation), or write Feedback + Needs revision |
+| Daily 07:30 | Postponed → next open slot; Approved + chosen → **Ready to Post** | Post it, set Status = Posted |
+
+Running it on a server, schedules and notifications: [docs/operations.md](docs/operations.md).
+
 ## Layout
 
 | Path | What |
@@ -18,6 +32,7 @@ Notion is the UI and the approval surface. Claude does the work. This repo holds
 | `schema/` | Notion schema target, snapshots, rollback notes |
 | `tools/` | Standalone helpers: `fetch.py` (link fetcher), `engine.py` (dedupe key, similarity) |
 | `scripts/` | `setup.sh`, git hooks, secret scan |
+| `scheduling/` | `jobs.txt`, `run.sh`, `install.sh` (systemd/launchd/cron), Windows tasks |
 | `docs/` | Getting started, brand DNA, Notion page sources, setup checklists, Cowork |
 | `.claude/commands/` | Slash commands for Claude Code |
 | `tests/` | `pytest` suite |
@@ -50,6 +65,7 @@ git config core.hooksPath scripts/hooks    # secret scan + tests before each com
 | Change a setting | `cli.py settings-set "Production extras" On` | Engine Settings |
 | News radar (daily) | `cli.py news-radar` | News Candidates, approved → ideas |
 | Approvals (daily) | `cli.py reschedule` | Content Plan |
+| Test notifications | `cli.py notify-test` | never (sends a message with `--apply`) |
 
 Every command is a **dry-run unless you add `--apply`**. A dry-run prints what would change and saves it to `logs/changeset-*.json`. Re-running a command never duplicates rows. Each run is logged to `logs/runs.jsonl` (and to the Notion Run Log with `--apply`).
 

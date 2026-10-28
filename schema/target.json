@@ -135,7 +135,8 @@
         ["Brand-fit pass threshold", "7"],
         ["Post-date offset (days)", "3"],
         ["Post-date base", "slot_date (slot_date or added_date)"],
-        ["News candidates per day", "5"]
+        ["News candidates per day", "5"],
+        ["Notifications", "Off (On = Telegram/email after each scheduled run that changes something)"]
       ]
     },
     "brand_profile": {

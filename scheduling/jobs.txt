@@ -1,0 +1,8 @@
+# name | minute hour day-of-week (cron style, * = every day; 0/7=Sun … 4=Thu 5=Fri) | engine CLI command
+# Times are in the machine's local time zone: set the server to Asia/Karachi, or shift the hours.
+reschedule      | 30 7 *  | reschedule --apply
+news-radar      | 0 8 *   | news-radar --apply
+add-url         | 0 9 *   | add-url --from-notion --apply
+generate-cards  | 30 9 *  | generate-cards --locked --apply
+scan-creators   | 0 20 4  | scan-creators --apply
+weekly-plan     | 0 17 5  | weekly-plan --apply

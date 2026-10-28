@@ -103,6 +103,7 @@ OVERRIDES = {
     "news candidates per day": ("caps.news_radar", first_number),
     "production extras": ("production.extras", on_off),
     "default length (s)": ("script.length_s", number_list(2)),
+    "notifications": ("notify.enabled", on_off),
 }
 
 

@@ -1,0 +1,50 @@
+# Optional: run the commands that need no Whisper or browser cookies on GitHub's runners.
+# Off unless the repository variable ENGINE_ACTIONS is set to "on". Secrets needed:
+# NOTION_TOKEN, CLAUDE_CODE_OAUTH_TOKEN (from `claude setup-token`). Cron times are UTC (Karachi = UTC+5).
+name: content-engine schedule
+on:
+  schedule:
+    - cron: "30 2 * * *"   # 07:30 PKT reschedule
+    - cron: "0 3 * * *"    # 08:00 PKT news-radar
+    - cron: "0 12 * * 5"   # 17:00 PKT Friday weekly-plan
+  workflow_dispatch:
+    inputs:
+      command:
+        description: "engine command (e.g. news-radar --apply)"
+        required: true
+        default: "ping"
+jobs:
+  run:
+    if: vars.ENGINE_ACTIONS == 'on'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm install -g @anthropic-ai/claude-code
+      - run: pip install requests jsonschema yt-dlp
+      - name: Pick command
+        id: pick
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          INPUT_CMD: ${{ inputs.command }}
+        run: |
+          case "$SCHEDULE" in
+            "30 2 * * *") echo "cmd=reschedule --apply" >> "$GITHUB_OUTPUT" ;;
+            "0 3 * * *")  echo "cmd=news-radar --apply" >> "$GITHUB_OUTPUT" ;;
+            "0 12 * * 5") echo "cmd=weekly-plan --apply" >> "$GITHUB_OUTPUT" ;;
+            *)            echo "cmd=$INPUT_CMD" >> "$GITHUB_OUTPUT" ;;
+          esac
+      - name: Run
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          CMD: ${{ steps.pick.outputs.cmd }}
+        run: |
+          read -ra ARGS <<< "$CMD"
+          python cli.py "${ARGS[@]}"
