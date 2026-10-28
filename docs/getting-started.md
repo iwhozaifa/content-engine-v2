@@ -6,23 +6,23 @@ This folder replaces your v1 `4-claude-code` folder. It adds manual URL discover
 | --- | --- |
 | `CLAUDE.md` | Engine rules both Claude Code and Cowork follow |
 | `.claude/commands/` | /migrate, /add-url, /write, /revise, /options, /score, /research, /plan-week, /carousel |
-| `fetch.py` | Free link fetcher for YouTube, Instagram and TikTok: details + transcript (captions, or Whisper on your Mac) |
-| `setup_mac.sh` | One-time Mac install of the free tools (re-run it to update) |
-| `engine.py` + tests | URL dedupe key + similarity check |
+| `tools/fetch.py` | Free link fetcher for YouTube, Instagram and TikTok: details + transcript (captions, or Whisper on your Mac) |
+| `scripts/setup.sh` | One-time Mac install of the free tools (re-run it to update) |
+| `tools/engine.py` + tests | URL dedupe key + similarity check |
 | `setup/Notion migration checklist.md` | Every Notion change for phase 0, with formulas and views |
-| `notion-pages/` | Engine Settings, Brand Voice & Style Guide, Idea page template, Short script template |
-| `cowork/Cowork setup.md` | How to run the same steps in Cowork with the browser |
+| `docs/notion-pages/` | Engine Settings, Brand Voice & Style Guide, Idea page template, Short script template |
+| `docs/cowork/Cowork setup.md` | How to run the same steps in Cowork with the browser |
 
 ## Install on the Mac (about 20 min, mostly downloads)
 
-1. Copy this folder to the Mac, e.g. `~/content-engine-v2`, and copy your **`Aliyan_AI_Content_DNA.md`** into it.
-2. In Terminal: `cd ~/content-engine-v2 && ./setup_mac.sh`. This installs ffmpeg, then the latest yt-dlp and Whisper into a local `.venv`, and runs the tests (should end with `OK`). It needs Homebrew ([brew.sh](https://brew.sh)). Everything is free.
+1. Copy this folder to the Mac, e.g. `~/content-engine-v2`, and copy your **`Aliyan_AI_Content_DNA.md`** into `docs/brand/`.
+2. In Terminal: `cd ~/content-engine-v2 && scripts/setup.sh`. This installs ffmpeg, then the latest yt-dlp and Whisper into a local `.venv`, and runs the tests (should end with `OK`). It needs Homebrew ([brew.sh](https://brew.sh)). Everything is free.
 3. Install **Firefox** and log in to **Instagram** there (a secondary account is safer). The fetcher borrows that login for Instagram links, and for TikTok or YouTube only if they ask for one.
-4. Try one link: `.venv/bin/python fetch.py "<a YouTube Short link>"`. You should see JSON with a title and a transcript.
+4. Try one link: `.venv/bin/python tools/fetch.py "<a YouTube Short link>"`. You should see JSON with a title and a transcript.
 5. Run `claude` in this folder, type `/mcp`, and check Notion is connected. If it isn't: quit, run `claude mcp add --transport http notion https://mcp.notion.com/mcp`, start `claude` again, type `/mcp` and sign in.
-6. Cowork instead of the terminal: follow `cowork/Cowork setup.md`.
+6. Cowork instead of the terminal: follow `docs/cowork/Cowork setup.md`.
 
-**When fetching stops working** (sites change often): re-run `./setup_mac.sh` to update yt-dlp. For Instagram, log in again in Firefox. Pasting the transcript after a link always works.
+**When fetching stops working** (sites change often): re-run `scripts/setup.sh` to update yt-dlp. For Instagram, log in again in Firefox. Pasting the transcript after a link always works.
 
 ## Phase 0: migrate Notion (about 1–2 h)
 

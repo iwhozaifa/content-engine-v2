@@ -1,0 +1,159 @@
+{
+  "database": "402826bb-cef5-8081-8c0d-f14493a9b6c5",
+  "data_source": "402826bb-cef5-8054-b1e1-000b9a01bb22",
+  "title": "Raw Content",
+  "properties": {
+    "Added": {
+      "type": "date"
+    },
+    "Canonical URL": {
+      "type": "rich_text"
+    },
+    "Comments": {
+      "type": "number",
+      "format": "number"
+    },
+    "Content type": {
+      "type": "select",
+      "options": [
+        "Short",
+        "Long video",
+        "Article",
+        "Thread",
+        "Post"
+      ]
+    },
+    "Creator": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-809d-ae20-000bd6912ee9",
+      "kind": "dual_property"
+    },
+    "Creator baseline engagement %": {
+      "type": "rollup",
+      "relation_property_name": "Creator",
+      "rollup_property_name": "Baseline engagement %",
+      "function": "max"
+    },
+    "Creator baseline velocity": {
+      "type": "rollup",
+      "relation_property_name": "Creator",
+      "rollup_property_name": "Baseline velocity",
+      "function": "max"
+    },
+    "Creator baseline views": {
+      "type": "rollup",
+      "relation_property_name": "Creator",
+      "rollup_property_name": "Baseline views",
+      "function": "max"
+    },
+    "Days live": {
+      "type": "formula",
+      "expression": "max(dateBetween(prop(\"Metrics captured at\"), prop(\"Published\"), \"hours\") / 24, 0.5)"
+    },
+    "Discovered via": {
+      "type": "select",
+      "options": [
+        "Manual",
+        "Auto scan"
+      ]
+    },
+    "Engagement %": {
+      "type": "formula",
+      "expression": "if(empty(prop(\"Views\")) or prop(\"Views\") == 0, 0, round((if(empty(prop(\"Likes\")), 0, prop(\"Likes\")) + 2 * if(empty(prop(\"Comments\")), 0, prop(\"Comments\")) + 3 * if(empty(prop(\"Shares\")), 0, prop(\"Shares\"))) / prop(\"Views\") * 10000) / 100)"
+    },
+    "Fetch error": {
+      "type": "rich_text"
+    },
+    "Fetch status": {
+      "type": "select",
+      "options": [
+        "OK",
+        "Partial",
+        "Failed",
+        "Private",
+        "Unsupported"
+      ]
+    },
+    "Idea": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-809b-8886-000b9d3c4873",
+      "kind": "dual_property"
+    },
+    "Language": {
+      "type": "select",
+      "options": [
+        "English",
+        "Urdu",
+        "Hindi",
+        "Mixed",
+        "Other"
+      ]
+    },
+    "Likes": {
+      "type": "number",
+      "format": "number"
+    },
+    "Metrics captured at": {
+      "type": "date"
+    },
+    "Outlier": {
+      "type": "formula",
+      "expression": "if(empty(prop(\"Views\")), 0, round(prop(\"Views\") / max(prop(\"Creator baseline views\"), 1) * 100) / 100)"
+    },
+    "Platform": {
+      "type": "rich_text"
+    },
+    "Published": {
+      "type": "date"
+    },
+    "Recurrence": {
+      "type": "number",
+      "format": "number"
+    },
+    "Shares": {
+      "type": "number",
+      "format": "number"
+    },
+    "Status": {
+      "type": "select",
+      "options": [
+        "New",
+        "Processed",
+        "Skipped",
+        "Duplicate"
+      ]
+    },
+    "Title": {
+      "type": "title"
+    },
+    "Transcript": {
+      "type": "rich_text"
+    },
+    "Transcript source": {
+      "type": "select",
+      "options": [
+        "Captions",
+        "Whisper",
+        "Pasted",
+        "Article text",
+        "Browser",
+        "None"
+      ]
+    },
+    "Trend score": {
+      "type": "formula",
+      "expression": "round(100 * (0.35 * min(prop(\"Outlier\") / 4, 1) + 0.25 * min(prop(\"Velocity ratio\") / 4, 1) + 0.20 * min((prop(\"Engagement %\") / max(prop(\"Creator baseline engagement %\"), 0.1)) / 3, 1) + 0.20 * min(if(empty(prop(\"Recurrence\")), 0, prop(\"Recurrence\")) / 5, 1)))"
+    },
+    "Velocity ratio": {
+      "type": "formula",
+      "expression": "if(empty(prop(\"Views\")), 0, round((prop(\"Views\") / prop(\"Days live\")) / max(prop(\"Creator baseline velocity\"), 1) * 100) / 100)"
+    },
+    "Video URL": {
+      "type": "url"
+    },
+    "Views": {
+      "type": "number",
+      "format": "number"
+    }
+  }
+}

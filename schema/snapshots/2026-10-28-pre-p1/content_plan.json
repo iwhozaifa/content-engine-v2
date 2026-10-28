@@ -1,0 +1,64 @@
+{
+  "database": "402826bb-cef5-8011-98f3-cc47a7cb07d7",
+  "data_source": "402826bb-cef5-80d0-9115-000b221bc602",
+  "title": "Content Plan",
+  "properties": {
+    "Approved script": {
+      "type": "relation",
+      "data_source_id": "a9a00b83-73e0-49c0-90f8-eae15430b7d6",
+      "kind": "single_property"
+    },
+    "Brand fit": {
+      "type": "number",
+      "format": "number"
+    },
+    "CTA": {
+      "type": "rich_text"
+    },
+    "Content job": {
+      "type": "rich_text"
+    },
+    "Creator input required": {
+      "type": "checkbox"
+    },
+    "Date": {
+      "type": "date"
+    },
+    "Day": {
+      "type": "rich_text"
+    },
+    "Final script": {
+      "type": "rich_text"
+    },
+    "Idea": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-809b-8886-000b9d3c4873",
+      "kind": "dual_property"
+    },
+    "Length target (s)": {
+      "type": "number",
+      "format": "number"
+    },
+    "Original angle": {
+      "type": "rich_text"
+    },
+    "Pillar": {
+      "type": "rich_text"
+    },
+    "Source inspiration": {
+      "type": "url"
+    },
+    "Status": {
+      "type": "select",
+      "options": [
+        "Planned"
+      ]
+    },
+    "Template": {
+      "type": "rich_text"
+    },
+    "Video": {
+      "type": "title"
+    }
+  }
+}

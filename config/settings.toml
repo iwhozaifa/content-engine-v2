@@ -1,0 +1,79 @@
+# Engine defaults. Values marked [notion] can be overridden by the matching row
+# in the Engine Settings page (see services/settings.py OVERRIDES). Every run
+# logs which value it used and where it came from: `python cli.py settings-check`.
+
+[general]
+timezone = "Asia/Karachi"
+dna_file = "docs/brand/Aliyan_AI_Content_DNA.md"
+
+[claude]
+bin = ""                    # empty = $CLAUDE_BIN, then PATH, then the VS Code extension's bundled binary
+timeout_s = 600
+max_attempts = 2            # 1 retry on a failed call or invalid JSON
+budget_usd_per_call = 1.0   # passed to --max-budget-usd as a runaway guard
+
+[claude.models]             # model per task (cost control)
+default = "claude-haiku-5-5"
+idea_extract = "claude-sonnet-5-5"
+brand_fit = "claude-haiku-5-5"
+trend_judge = "claude-haiku-5-5"
+news_judge = "claude-haiku-5-5"
+script_variations = "claude-sonnet-5-5"
+captions = "claude-haiku-5-5"
+similarity_judge = "claude-haiku-5-5"
+
+[notion]
+api_version = "2025-09-03"
+requests_per_second = 3
+max_attempts = 5
+
+[cadence]                   # [notion] "Cadence"
+days = ["Mon", "Tue", "Wed", "Thu", "Fri"]
+slots_per_day = 1
+plan_day = "Fri"
+
+[brand_fit]
+threshold = 7               # [notion] "Brand-fit pass threshold"
+
+[post_date]
+offset_days = 3             # [notion] "Post-date offset (days)"
+base = "slot_date"          # slot_date | added_date
+
+[review]
+auto_shortlist = 7          # [notion]
+merge_confidence = 0.8      # [notion]
+flag_confidence = 0.5       # [notion]
+
+[trend]
+weights = [0.35, 0.25, 0.20, 0.20]   # outlier, velocity, engagement, recurrence [notion]
+caps = [4, 4, 3, 5]                  # [notion]
+thresholds = [2.0, 2.0, 1.5, 3]      # [notion]
+candidate_score = 60                 # [notion]
+baseline_posts = 20                  # [notion]
+
+[similarity]
+review_pct = 4.0            # [notion]
+too_close_pct = 8.0         # [notion]
+max_run = 10                # [notion]
+
+[scan]
+lookback_days = 14          # [notion]
+max_posts_per_creator = 15  # [notion]
+max_creators_per_run = 15   # [notion]
+min_post_age_hours = 24     # [notion]
+
+[fetch]
+browser = "firefox"         # cookie source for yt-dlp on a desktop
+cookies_file = ""           # servers: path to an exported cookies.txt (overrides browser)
+whisper_model = "small"     # [notion]
+
+[caps]                      # max items handled per run
+add_url = 20
+score = 30
+scan_creators = 15
+news_radar = 5              # [notion] kept candidates per day
+generate_cards = 5
+
+[notify]
+enabled = false
+channel = "telegram"        # telegram | email

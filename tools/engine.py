@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Deterministic helpers for the content engine (no network, standard library only).
 
-  python3 engine.py canon <url> [<url> ...]
+  python3 tools/engine.py canon <url> [<url> ...]
       Canonical URL per input, as JSON. Used as the dedupe key in Raw Content.
 
-  python3 engine.py similarity --script script.txt --source transcript.txt
+  python3 tools/engine.py similarity --script script.txt --source transcript.txt
       Overlap between a draft script and its source transcript, as JSON:
       shared 5-gram %, longest identical run (words), flag, and the shared runs.
       Thresholds default to the Engine Settings values and can be overridden

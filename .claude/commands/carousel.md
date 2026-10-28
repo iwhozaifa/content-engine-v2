@@ -2,7 +2,7 @@
 description: Carousel outline from a final script
 ---
 
-Read Engine Settings (Notion page), the Brand Voice & Style Guide (Notion page) and Aliyan_AI_Content_DNA.md first. Use the Notion MCP tools to read and write the databases, using the exact property names that exist there.
+Read Engine Settings (Notion page), the Brand Voice & Style Guide (Notion page) and docs/brand/Aliyan_AI_Content_DNA.md first. Use the Notion MCP tools to read and write the databases, using the exact property names that exist there.
 
 Turn the latest Approved script (Scripts database) of $ARGUMENTS into a carousel (6–8 slides) using my branding colors and carousel style notes in Content DNA.
 

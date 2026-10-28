@@ -1,0 +1,37 @@
+# Notion object IDs (not secret). Found by `python cli.py ping`; databases created
+# by later migrations are added here by `migrate-schema --apply`.
+# database = the database block, data_source = the collection the API queries.
+
+[pages]
+content_engine = "402826bb-cef5-80c6-9c95-c876ed08852e"
+brand_profile = "942826bb-cef5-833e-b940-019deeb406e8"    # Aliyan_AI_Content_DNA
+engine_settings = "406826bb-cef5-811a-a1dd-e32bca0f7372"
+voice_guide = "406826bb-cef5-8147-a05b-ff75d18ea983"
+
+[databases.content_creators]
+database = "402826bb-cef5-801b-af32-c75994a2ab54"
+data_source = "402826bb-cef5-809d-ae20-000bd6912ee9"
+
+[databases.raw_content]
+database = "402826bb-cef5-8081-8c0d-f14493a9b6c5"
+data_source = "402826bb-cef5-8054-b1e1-000b9a01bb22"
+
+[databases.idea_bank]
+database = "402826bb-cef5-8089-95fc-d336a9407ab6"
+data_source = "402826bb-cef5-809b-8886-000b9d3c4873"
+
+[databases.scripts]
+database = "0fb657be-3f87-477f-8979-8e4c78852451"
+data_source = "a9a00b83-73e0-49c0-90f8-eae15430b7d6"
+
+[databases.content_plan]
+database = "402826bb-cef5-8011-98f3-cc47a7cb07d7"
+data_source = "402826bb-cef5-80d0-9115-000b221bc602"
+
+[databases.hook_library]
+database = "402826bb-cef5-8029-8eda-fa9b2215088a"
+data_source = "402826bb-cef5-80c7-ba45-000bedac1324"
+
+[databases.cta_bank]
+database = "402826bb-cef5-80ba-a003-df0c86523492"
+data_source = "402826bb-cef5-80ec-a6e1-000b3fd1c137"

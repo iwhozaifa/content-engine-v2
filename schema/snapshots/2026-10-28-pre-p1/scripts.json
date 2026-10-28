@@ -1,0 +1,92 @@
+{
+  "database": "0fb657be-3f87-477f-8979-8e4c78852451",
+  "data_source": "a9a00b83-73e0-49c0-90f8-eae15430b7d6",
+  "title": "Scripts",
+  "properties": {
+    "Created": {
+      "type": "created_time"
+    },
+    "DNA version": {
+      "type": "rich_text"
+    },
+    "Est. seconds": {
+      "type": "number",
+      "format": "number"
+    },
+    "Feedback": {
+      "type": "rich_text"
+    },
+    "Format": {
+      "type": "select",
+      "options": [
+        "Short"
+      ]
+    },
+    "Hook alternates": {
+      "type": "rich_text"
+    },
+    "Idea": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-809b-8886-000b9d3c4873",
+      "kind": "dual_property"
+    },
+    "Longest shared run": {
+      "type": "number",
+      "format": "number"
+    },
+    "Platform": {
+      "type": "multi_select",
+      "options": [
+        "Instagram",
+        "TikTok",
+        "YouTube Shorts"
+      ]
+    },
+    "Previous version": {
+      "type": "relation",
+      "data_source_id": "a9a00b83-73e0-49c0-90f8-eae15430b7d6",
+      "kind": "single_property"
+    },
+    "Script": {
+      "type": "title"
+    },
+    "Similarity %": {
+      "type": "number",
+      "format": "number"
+    },
+    "Similarity flag": {
+      "type": "select",
+      "options": [
+        "OK",
+        "Review",
+        "Too close",
+        "Not checked"
+      ]
+    },
+    "Status": {
+      "type": "select",
+      "options": [
+        "Draft",
+        "Needs revision",
+        "Revised",
+        "Approved",
+        "Superseded"
+      ]
+    },
+    "Target length (s)": {
+      "type": "number",
+      "format": "number"
+    },
+    "Version": {
+      "type": "number",
+      "format": "number"
+    },
+    "Voice guide version": {
+      "type": "rich_text"
+    },
+    "Word count": {
+      "type": "number",
+      "format": "number"
+    }
+  }
+}

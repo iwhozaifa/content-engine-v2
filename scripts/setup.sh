@@ -1,7 +1,7 @@
 #!/bin/bash
 # One-time setup on Ubuntu (tested on WSL2, Ubuntu 26.04). Free tools only. Safe to re-run: it also updates yt-dlp.
 set -e
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
 if ! command -v apt-get >/dev/null; then
   echo "apt-get is missing. This script is for Ubuntu/Debian (including WSL)."; exit 1

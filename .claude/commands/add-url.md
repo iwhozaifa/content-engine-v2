@@ -2,16 +2,16 @@
 description: Manual discovery - turn pasted URLs into reframed ideas in the Idea Bank
 ---
 
-Read Engine Settings (Notion page), the Brand Voice & Style Guide (Notion page) and Aliyan_AI_Content_DNA.md first. Use the Notion MCP tools to read and write the databases, using the exact property names that exist there.
+Read Engine Settings (Notion page), the Brand Voice & Style Guide (Notion page) and docs/brand/Aliyan_AI_Content_DNA.md first. Use the Notion MCP tools to read and write the databases, using the exact property names that exist there.
 
 Input: $ARGUMENTS = one or more URLs separated by spaces, optionally followed by "transcript:" and pasted text for the last URL.
 
 For each URL, in order:
 
-1. **Normalise:** `python3 engine.py canon <url>`.
+1. **Normalise:** `python3 tools/engine.py canon <url>`.
 2. **Duplicate URL?** Search Raw Content for that Canonical URL. If it's found: refresh Views/Likes/Comments and Metrics captured at if you can fetch them, reply "Already in Idea Bank: <idea link>", and go to the next URL.
 3. **Fetch (free, no API keys):**
-   - YouTube, Shorts, Instagram, TikTok: run `.venv/bin/python fetch.py <url>` (all video URLs in one call is fine; it pauses 3–6 s between links). It returns JSON per link with metadata, transcript, transcript_source, language, fetch_status, fetch_error and hint. It tries captions first, then Whisper on the audio, and uses the Firefox login for Instagram (and for YouTube/TikTok only if they ask).
+   - YouTube, Shorts, Instagram, TikTok: run `.venv/bin/python tools/fetch.py <url>` (all video URLs in one call is fine; it pauses 3–6 s between links). It returns JSON per link with metadata, transcript, transcript_source, language, fetch_status, fetch_error and hint. It tries captions first, then Whisper on the audio, and uses the Firefox login for Instagram (and for YouTube/TikTok only if they ask).
    - Use the JSON's `canonical_url` for the duplicate check again, because share links like vm.tiktok.com only resolve after fetching.
    - Article, blog, thread or any other page: fetch it with web fetch and extract title, author, date and main text.
    - A pasted transcript always wins over a fetched one (Transcript source = Pasted).

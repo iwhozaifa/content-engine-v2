@@ -1,5 +1,5 @@
 import unittest
-from engine import canon, similarity
+from tools.engine import canon, similarity
 
 SOURCE = """00:01 Everyone tells you to learn ten AI tools but that is exactly why you are still broke.
 00:05 The market does not pay for tools, it pays for outcomes. Pick one problem a business has

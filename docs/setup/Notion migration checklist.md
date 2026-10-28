@@ -83,7 +83,7 @@ Create a full-page database named `Scripts` inside the Content Engine page with:
 | Voice guide version | Text |
 
 - [ ] Scripts created
-- [ ] Set `notion-pages/Short script template.md` as its default template (••• → Templates → New → paste → set as default)
+- [ ] Set `docs/notion-pages/Short script template.md` as its default template (••• → Templates → New → paste → set as default)
 
 ## 5. Content Calendar → Content Plan (rename only in phase 0)
 
@@ -135,9 +135,9 @@ If a formula shows an error, the usual cause is a property name that doesn't mat
 
 ## 7. New pages
 
-- [ ] Import `notion-pages/Engine Settings.md` into the Content Engine page
-- [ ] Import `notion-pages/Brand Voice & Style Guide.md`, then reconcile it with your edited `Aliyan_AI_Content_DNA.md` (section 8 of the kit DNA moves here)
-- [ ] Import `notion-pages/Idea page template.md` and set it as the Idea Bank default template
+- [ ] Import `docs/notion-pages/Engine Settings.md` into the Content Engine page
+- [ ] Import `docs/notion-pages/Brand Voice & Style Guide.md`, then reconcile it with your edited `Aliyan_AI_Content_DNA.md` (section 8 of the kit DNA moves here)
+- [ ] Import `docs/notion-pages/Idea page template.md` and set it as the Idea Bank default template
 
 ## 8. Views (manual: the Notion API can't create views)
 

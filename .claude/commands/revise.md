@@ -2,7 +2,7 @@
 description: Make the next version of any script marked Needs revision
 ---
 
-Read Engine Settings (Notion page), the Brand Voice & Style Guide (Notion page) and Aliyan_AI_Content_DNA.md first. Use the Notion MCP tools to read and write the databases, using the exact property names that exist there.
+Read Engine Settings (Notion page), the Brand Voice & Style Guide (Notion page) and docs/brand/Aliyan_AI_Content_DNA.md first. Use the Notion MCP tools to read and write the databases, using the exact property names that exist there.
 
 Input: $ARGUMENTS = script names, or empty for every Scripts row with Status = Needs revision.
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fetch a YouTube, Instagram or TikTok link (or an article) for free, as JSON.
 
-  python3 fetch.py <url> [<url> ...] [--browser firefox] [--model small] [--out raw]
+  python3 tools/fetch.py <url> [<url> ...] [--browser firefox] [--model small] [--out raw]
 
 Per link it prints one record with the fields /add-url writes to Raw Content:
 title, creator, creator_url, platform, content_type, published, views, likes,
@@ -30,17 +30,20 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from engine import canon
+try:
+    from tools.engine import canon
+except ImportError:  # run as a script: python tools/fetch.py
+    from engine import canon
 
-HERE = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent  # repo root: .venv/ and raw/ live there
 SUB_LANGS = "en.*,ur.*,hi.*,en"
 LOGIN_HINTS = ("login required", "log in", "sign in", "cookies", "rate-limit", "rate limit",
                "not a bot", "requested content is not available", "empty media response")
 
 
 def tool(name):
-    """Prefer the copy installed by setup_mac.sh in .venv, then anything on PATH."""
-    local = HERE / ".venv" / "bin" / name
+    """Prefer the copy installed by scripts/setup.sh in .venv, then anything on PATH."""
+    local = ROOT / ".venv" / "bin" / name
     return str(local) if local.exists() else shutil.which(name)
 
 
@@ -83,7 +86,7 @@ def classify(stderr):
         return "Failed", "The post looks deleted or unavailable. Check the link or paste the transcript."
     if any(h in e for h in ("urlopen error", "timed out", "connection", "name resolution")):
         return "Failed", "Network problem. Check the internet connection and retry."
-    return "Failed", "Fetch failed. Re-run ./setup_mac.sh to update yt-dlp, retry later, or paste the transcript."
+    return "Failed", "Fetch failed. Re-run scripts/setup.sh to update yt-dlp, retry later, or paste the transcript."
 
 
 def run_ytdlp(args, browser, use_login):
@@ -168,7 +171,7 @@ def captions(url, platform, info, browser, out):
 
 def whisper(url, platform, info, browser, out, model):
     if not tool("whisper") or not shutil.which("ffmpeg"):
-        return "", None, "Whisper or ffmpeg isn't installed (run setup_mac.sh), so only the caption was used."
+        return "", None, "Whisper or ffmpeg isn't installed (run scripts/setup.sh), so only the caption was used."
     r = ytdlp(["-x", "--audio-format", "mp3", "-o", str(out / "%(id)s.%(ext)s")], url, platform, browser)
     audio = out / f"{info['id']}.mp3"
     if r.returncode != 0 or not audio.exists():
@@ -216,12 +219,12 @@ def main(argv=None):
                    help="browser whose Instagram/TikTok/YouTube login yt-dlp may use (firefox, safari, chrome)")
     p.add_argument("--model", default=os.environ.get("ENGINE_WHISPER_MODEL", "small"),
                    help="Whisper model: base (fast), small (default, better for Urdu), medium (slow)")
-    p.add_argument("--out", default=str(HERE / "raw"))
+    p.add_argument("--out", default=str(ROOT / "raw"))
     a = p.parse_args(argv)
     a.browser = resolve_browser(a.browser)
 
     if not tool("yt-dlp"):
-        sys.exit("yt-dlp isn't installed. Run ./setup_mac.sh first.")
+        sys.exit("yt-dlp isn't installed. Run scripts/setup.sh first.")
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
 

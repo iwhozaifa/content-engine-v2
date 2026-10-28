@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-import fetch
+from tools import fetch
 
 INFO = {"id": "abc123", "title": "3 AI skills", "uploader": "Maker", "uploader_url": "https://youtube.com/@maker",
         "upload_date": "20261020", "duration": 42, "view_count": 120000, "like_count": 8400,

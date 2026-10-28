@@ -2,7 +2,7 @@
 description: Write draft scripts for every Approved idea (or the ones named)
 ---
 
-Read Engine Settings (Notion page), the Brand Voice & Style Guide (Notion page) and Aliyan_AI_Content_DNA.md first. Use the Notion MCP tools to read and write the databases, using the exact property names that exist there.
+Read Engine Settings (Notion page), the Brand Voice & Style Guide (Notion page) and docs/brand/Aliyan_AI_Content_DNA.md first. Use the Notion MCP tools to read and write the databases, using the exact property names that exist there.
 
 Input: $ARGUMENTS = idea titles, or empty for every Idea Bank row with Status = Approved and no Scripts row yet.
 
@@ -24,7 +24,7 @@ For each idea:
 5. **"Ready to read":** H1 + the main spoken lines + CTA, one beat per line. Count the words and estimate seconds at 2.6 words/second. If it's over the target, cut filler from the main lines (never from lines I've edited) and say what you cut.
 6. **Originality check:**
    - Save the "Ready to read" text plus all alternates to `tmp/<idea>-script.txt` and the source transcript to `tmp/<idea>-source.txt`.
-   - Run `python3 engine.py similarity --script ... --source ...` with the Settings thresholds.
+   - Run `python3 tools/engine.py similarity --script ... --source ...` with the Settings thresholds.
    - Also judge whether any example, story, number or the distinctive structure was lifted from the source.
    - If the flag is Too close, rewrite the flagged lines once and re-run. If it's still Too close, keep the result and list the flagged lines for me.
    - With no transcript, the flag is Not checked and only the judgement applies; say so.

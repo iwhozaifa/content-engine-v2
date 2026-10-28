@@ -2,7 +2,7 @@
 description: Propose next week's 5 videos into the Content Plan
 ---
 
-Read Engine Settings (Notion page), the Brand Voice & Style Guide (Notion page) and Aliyan_AI_Content_DNA.md first. Use the Notion MCP tools to read and write the databases, using the exact property names that exist there.
+Read Engine Settings (Notion page), the Brand Voice & Style Guide (Notion page) and docs/brand/Aliyan_AI_Content_DNA.md first. Use the Notion MCP tools to read and write the databases, using the exact property names that exist there.
 
 Plan next week (Mon–Fri, 5 videos) from Idea Bank rows with Status = Scripted whose latest script is Approved.
 

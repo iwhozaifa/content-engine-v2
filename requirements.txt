@@ -1,0 +1,8 @@
+# Runtime (installed by setup_mac.sh / setup.sh into .venv)
+yt-dlp
+openai-whisper
+requests>=2.31
+jsonschema>=4.20
+
+# Dev
+pytest>=8

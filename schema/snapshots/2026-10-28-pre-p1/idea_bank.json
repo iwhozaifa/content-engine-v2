@@ -1,0 +1,162 @@
+{
+  "database": "402826bb-cef5-8089-95fc-d336a9407ab6",
+  "data_source": "402826bb-cef5-809b-8886-000b9d3c4873",
+  "title": "Idea Bank",
+  "properties": {
+    "Audience fit": {
+      "type": "number",
+      "format": "number"
+    },
+    "Audience pain": {
+      "type": "rich_text"
+    },
+    "Brand fit": {
+      "type": "number",
+      "format": "number"
+    },
+    "Cluster": {
+      "type": "rich_text"
+    },
+    "Content job": {
+      "type": "rich_text"
+    },
+    "Differentiation note": {
+      "type": "rich_text"
+    },
+    "Duplicate of": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-809b-8886-000b9d3c4873",
+      "kind": "single_property"
+    },
+    "Fit score": {
+      "type": "number",
+      "format": "number"
+    },
+    "Format": {
+      "type": "select",
+      "options": [
+        "Short"
+      ]
+    },
+    "Hook pattern": {
+      "type": "rich_text"
+    },
+    "Idea": {
+      "type": "title"
+    },
+    "Is approved": {
+      "type": "formula",
+      "expression": "includes([\"Approved\", \"Scripting\", \"Scripted\", \"In Production\", \"Published\"], prop(\"Status\"))"
+    },
+    "Key claims": {
+      "type": "rich_text"
+    },
+    "My rating": {
+      "type": "select",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    "Needs creator proof": {
+      "type": "checkbox"
+    },
+    "Novelty": {
+      "type": "number",
+      "format": "number"
+    },
+    "Originality": {
+      "type": "number",
+      "format": "number"
+    },
+    "Phase fit": {
+      "type": "number",
+      "format": "number"
+    },
+    "Pillar": {
+      "type": "rich_text"
+    },
+    "Pillar fit": {
+      "type": "number",
+      "format": "number"
+    },
+    "Plan item": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-80d0-9115-000b221bc602",
+      "kind": "dual_property"
+    },
+    "Possible duplicate": {
+      "type": "checkbox"
+    },
+    "Rejection reason": {
+      "type": "rich_text"
+    },
+    "Review rank": {
+      "type": "formula",
+      "expression": "round(0.4 * if(empty(prop(\"Trend score\")), 0, prop(\"Trend score\")) + 0.6 * if(empty(prop(\"Fit score\")), 0, prop(\"Fit score\")) * 10)"
+    },
+    "Scriptability": {
+      "type": "number",
+      "format": "number"
+    },
+    "Scripts": {
+      "type": "relation",
+      "data_source_id": "a9a00b83-73e0-49c0-90f8-eae15430b7d6",
+      "kind": "dual_property"
+    },
+    "Sources": {
+      "type": "relation",
+      "data_source_id": "402826bb-cef5-8054-b1e1-000b9a01bb22",
+      "kind": "dual_property"
+    },
+    "Status": {
+      "type": "select",
+      "options": [
+        "New",
+        "Shortlisted",
+        "Approved",
+        "Scripting",
+        "Scripted",
+        "In Production",
+        "Published",
+        "Archived",
+        "Rejected"
+      ]
+    },
+    "Suggested hook": {
+      "type": "rich_text"
+    },
+    "Target platforms": {
+      "type": "multi_select",
+      "options": [
+        "Instagram",
+        "TikTok",
+        "YouTube Shorts"
+      ]
+    },
+    "Topic tags": {
+      "type": "multi_select",
+      "options": [
+        "AI coding",
+        "Client handover",
+        "Claude skills"
+      ]
+    },
+    "Trend score": {
+      "type": "rollup",
+      "relation_property_name": "Sources",
+      "rollup_property_name": "Trend score",
+      "function": "max"
+    },
+    "Trend signal": {
+      "type": "number",
+      "format": "number"
+    },
+    "Why it works": {
+      "type": "rich_text"
+    }
+  }
+}
